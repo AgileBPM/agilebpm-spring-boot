@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * ID生成器配置
  *
- * @author wdd
+ * @author wacxhs
  * @date 2018-07-10
  */
 @ConfigurationProperties(prefix = "agile-bpm.id-generator")

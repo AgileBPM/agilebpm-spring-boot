@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -27,25 +28,26 @@ import java.util.*;
 /**
  * 数据源配置
  *
- * @author wdd
+ * @author wacxhs
  * @date 2018-07-10
  */
 @EnableConfigurationProperties({DataSourceExtraProperties.class})
 @Configuration
 public class DataSourceAutoConfiguration {
 
+    @Primary
     @ConditionalOnClass(DruidDataSource.class)
-//    @Bean(name = "dataSourceDefault", initMethod = "init", destroyMethod = "close")
+    @Bean(initMethod = "init", destroyMethod = "close")
     public DruidDataSource dataSourceDefault(DataSourceProperties dataSourceProperties) {
 
         return dataSourceProperties.initializeDataSourceBuilder().type(DruidDataSource.class).build();
     }
 
-    @Bean(name = "dataSource")
-    public DynamicDataSource dataSource(DataSourceExtraProperties dataSourceExtraProperties, DataSourceProperties dataSourceProperties) {
+    @Bean
+    public DynamicDataSource dataSource(DataSourceExtraProperties dataSourceExtraProperties, DruidDataSource dataSourceDefault) {
         DynamicDataSource dynamicDataSource = new DynamicDataSource();
         Map<Object, Object> targetDataSources = new HashMap<>(1);
-        targetDataSources.put("dataSourceDefault", dataSourceDefault(dataSourceProperties));
+        targetDataSources.put("dataSourceDefault", dataSourceDefault);
         dynamicDataSource.setTargetDataSources(targetDataSources);
         dynamicDataSource.setDefaultDbtype(dataSourceExtraProperties.getDbType());
         return dynamicDataSource;

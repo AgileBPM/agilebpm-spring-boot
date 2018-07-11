@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
- * @author wdd
+ * @author wacxhs
  * @date 2018-07-11
  */
 @ComponentScan("com.dstz.*")

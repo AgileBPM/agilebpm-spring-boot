@@ -3,7 +3,7 @@ package com.dstz.agilebpm.base.autoconfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * @author wdd
+ * @author wacxhs
  * @date 2018-07-11
  */
 @ConfigurationProperties(prefix = "spring.datasource")
