@@ -44,7 +44,7 @@ public class DataSourceAutoConfiguration {
     }
 
     @Bean
-    public DynamicDataSource dataSource(DataSourceExtraProperties dataSourceExtraProperties, DruidDataSource dataSourceDefault) {
+    public DynamicDataSource dataSource(DataSourceExtraProperties dataSourceExtraProperties, DataSource dataSourceDefault) {
         DynamicDataSource dynamicDataSource = new DynamicDataSource();
         Map<Object, Object> targetDataSources = new HashMap<>(1);
         targetDataSources.put("dataSourceDefault", dataSourceDefault);
