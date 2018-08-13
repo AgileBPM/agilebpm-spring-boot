@@ -37,6 +37,26 @@
                 <artifactId>base-rest</artifactId>
                 <version>${com.dstz.agilebpm.version}</version>
             </dependency>
+             <dependency>
+                <groupId>com.dstz.agilebpm</groupId>
+                <artifactId>bpm-rest</artifactId>
+                <version>${com.dstz.agilebpm.version}</version>
+            </dependency>
+             <dependency>
+                <groupId>com.dstz.agilebpm</groupId>
+                <artifactId>sys-rest</artifactId>
+                <version>${com.dstz.agilebpm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dstz.agilebpm</groupId>
+                <artifactId>http-security</artifactId>
+                <version>${com.dstz.agilebpm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dstz.agilebpm</groupId>
+                <artifactId>wf-rest</artifactId>
+                <version>${com.dstz.agilebpm.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
