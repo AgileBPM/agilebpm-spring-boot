@@ -8,21 +8,25 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.omg.CORBA.Request;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
+import com.dstz.base.api.constant.BaseStatusCode;
+import com.dstz.base.api.exception.BusinessException;
 import com.dstz.org.api.context.ICurrentContext;
+import com.dstz.org.api.service.UserService;
 import com.dstz.security.authentication.AccessDecisionManagerImpl;
 import com.dstz.security.authentication.FilterInvocationSecurityMetadataSourceImpl;
 import com.dstz.security.authentication.SecurityInterceptor;
@@ -43,7 +47,9 @@ import com.dstz.sys.util.ContextUtil;
 @EnableConfigurationProperties({ AbSecurityProperties.class })
 @Configuration
 public class AbSecurityConfiguration extends WebSecurityConfigurerAdapter {
-
+	@Autowired
+	AbSecurityProperties abSecurityProperties;
+	
 	@Bean
 	public LoginContext loginContext() {
 		return new LoginContext();
@@ -62,12 +68,11 @@ public class AbSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 * @param properties
 	 * @return
 	 */
-	@Bean
-	public XssFilter xssFilter(AbSecurityProperties properties) {
+	public XssFilter xssFilter() {
 		XssFilter xssFilter = new XssFilter();
 		List<String> ingores = new ArrayList<>();
 
-		String ingroesConfig = properties.getXssIngores();
+		String ingroesConfig = abSecurityProperties.getXssIngores();
 		if (StringUtils.isNotEmpty(ingroesConfig)) {
 			ingores = Arrays.asList(ingroesConfig.split(","));
 		}
@@ -82,12 +87,11 @@ public class AbSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 * @param properties
 	 * @return
 	 */
-	@Bean
-	public RefererCsrfFilter csrfFilter(AbSecurityProperties properties) {
+	public RefererCsrfFilter csrfFilter( ) {
 		RefererCsrfFilter filter = new RefererCsrfFilter();
 		List<String> ingores = new ArrayList<>();
 
-		String ingroesConfig = properties.getCsrfIngores();
+		String ingroesConfig = abSecurityProperties.getCsrfIngores();
 		if (StringUtils.isNotEmpty(ingroesConfig)) {
 			ingores = Arrays.asList(ingroesConfig.split(","));
 		}
@@ -106,7 +110,6 @@ public class AbSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 
 	/** 无权限处理器 返回resultMsg **/
-	@Bean
 	public DefaultAccessDeniedHandler accessDeniedHandler() {
 		return new DefaultAccessDeniedHandler();
 	}
@@ -115,15 +118,6 @@ public class AbSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public DefualtAuthenticationEntryPoint authenticationLoginEntry() {
 		return new DefualtAuthenticationEntryPoint();
 	}
-
-	@Resource
-	RefererCsrfFilter refererCsrfFilter;
-	@Resource
-	XssFilter xssFilter;
-	@Resource
-	AccessDeniedHandler accessDeniedHandler;
-	@Resource
-	SecurityInterceptor securityInterceptor;
 
 	/**
 	 * spring security 设置
@@ -134,13 +128,13 @@ public class AbSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.rememberMe().key("rememberPrivateKey");
 		http.logout().logoutSuccessHandler(new DefualtLogoutSuccessHandler());
 
-		http.addFilter(refererCsrfFilter);
-		http.addFilter(xssFilter);
+		http.addFilter(csrfFilter());
+		http.addFilter(xssFilter());
 
 		//鉴权主入口
-		http.addFilterBefore(securityInterceptor, FilterSecurityInterceptor.class);
+		http.addFilterBefore(securityInterceptor(), FilterSecurityInterceptor.class);
 		
-		http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+		http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
 
 		http.csrf().disable();
 	}
@@ -154,11 +148,11 @@ public class AbSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	//获取 URL 对应的角色
 	@Bean
-	protected FilterInvocationSecurityMetadataSource securityMetadataSource(AbSecurityProperties properties) {
+	protected FilterInvocationSecurityMetadataSource securityMetadataSource() {
 		FilterInvocationSecurityMetadataSourceImpl securityMetadataSource = new FilterInvocationSecurityMetadataSourceImpl();
 		
 		List<String> ingores = new ArrayList<>();
-		String ingroesConfig = properties.getXssIngores();
+		String ingroesConfig = abSecurityProperties.getXssIngores();
 		if (StringUtils.isNotEmpty(ingroesConfig)) {
 			ingores = Arrays.asList(ingroesConfig.split(","));
 		}
@@ -167,38 +161,34 @@ public class AbSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		return securityMetadataSource;
 	}
 	
-	@Resource
-	UserDetailsServiceImpl UserDetailsService;
-	@Bean /**登录鉴权***/
+	@Bean
+	protected UserDetailsService userDetailsService() {
+		return new UserDetailsServiceImpl();
+	}
+	
+	
+	/**登录鉴权***/
 	protected AuthenticationManager authenticationManager() {
 		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
 		daoAuthenticationProvider.setPasswordEncoder(new CustomPwdEncoder());
-		daoAuthenticationProvider.setUserDetailsService(UserDetailsService);
+		daoAuthenticationProvider.setUserDetailsService(userDetailsService());
 		
 		ProviderManager providerManager = new ProviderManager(Collections.singletonList(daoAuthenticationProvider));
 		return providerManager;
 	}
 
 	
-	@Resource
-	FilterInvocationSecurityMetadataSource securityMetadataSource;
-	@Resource
-	AccessDecisionManager accessDecisionManager;
-	@Resource
-	AuthenticationManager authenticationManager;
 	/**
 	 * 鉴权拦截器
 	 * @return
 	 */
-	@Bean
 	protected SecurityInterceptor securityInterceptor() {
 		SecurityInterceptor intercept = new SecurityInterceptor();
-		intercept.setAuthenticationManager(authenticationManager);
+		intercept.setAuthenticationManager(authenticationManager());
 		intercept.setAccessDecisionManager(new AccessDecisionManagerImpl());
-		intercept.setSecurityMetadataSource(securityMetadataSource);
+		intercept.setSecurityMetadataSource(securityMetadataSource());
 
 		return intercept;
 	}
-
 	
 }

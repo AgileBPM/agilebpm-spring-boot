@@ -6,3 +6,6 @@ spring:
     password: root
     dbType: mysql
 
+logging:
+  level:
+    root: debug

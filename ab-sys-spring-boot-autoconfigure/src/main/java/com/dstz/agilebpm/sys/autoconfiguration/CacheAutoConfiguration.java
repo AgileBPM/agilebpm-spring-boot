@@ -27,7 +27,6 @@ public class CacheAutoConfiguration {
 		if (!redisConfig.isUseRedisCache()) {
 			return new MemoryCache<>();
 		}
-		// 如何初始化一个Spring Bean ？？？ TODO set redisService
 		return new RedisCache<>();
 	}
 
