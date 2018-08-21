@@ -22,7 +22,7 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
-
+ 
         <dependency>
             <groupId>com.dstz.agilebpm</groupId>
             <artifactId>wf-rest</artifactId>
