@@ -105,28 +105,19 @@ public class AbBpmAutoConfiguration {
 	}
 	
 	
-	@Resource
-	TaskCreateListener taskCreateListener;
-	@Resource
-	TaskCompleteListener taskCompleteListener;
-	@Resource
-	InstanceEndEventListener instanceEndEventListener;
-	@Resource
-	InstanceStartEventListener instanceStartEventListener;
-	@Resource
-	ActivityStartedListener activityStartedListener;
-	@Resource
-	ActivityComplatedListener activityComplatedListener;
 	@Bean
 	GlobalEventListener globalEventListener() {
 		GlobalEventListener globalEventListener = new GlobalEventListener();
-		Map<String, ActEventListener> map = new HashMap<>();
-		map.put("TASK_CREATED", taskCreateListener);
-		map.put("TASK_COMPLETED", taskCompleteListener);
-		map.put("PROCESS_STARTED", instanceStartEventListener);
-		map.put("PROCESS_COMPLETED", instanceEndEventListener);
-		map.put("ACTIVITY_STARTED", activityStartedListener);
-		map.put("ACTIVITY_COMPLETED", activityComplatedListener);
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("TASK_CREATED", "taskCreateListener");
+		map.put("TASK_COMPLETED", "taskCompleteListener");
+		map.put("PROCESS_STARTED", "instanceStartEventListener");
+		map.put("PROCESS_COMPLETED", "instanceEndEventListener");
+		map.put("ACTIVITY_STARTED", "activityStartedListener");
+		map.put("ACTIVITY_COMPLETED", "activityComplatedListener");
+		
+		globalEventListener.setHandlers(map);
 		
 		return globalEventListener;
 	}
