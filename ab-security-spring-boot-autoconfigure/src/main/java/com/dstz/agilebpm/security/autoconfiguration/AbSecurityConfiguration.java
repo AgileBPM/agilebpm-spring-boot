@@ -22,6 +22,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.csrf.CsrfFilter;
 
 import com.dstz.base.api.constant.BaseStatusCode;
 import com.dstz.base.api.exception.BusinessException;
@@ -128,11 +129,11 @@ public class AbSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.rememberMe().key("rememberPrivateKey");
 		http.logout().logoutSuccessHandler(new DefualtLogoutSuccessHandler());
 
-		http.addFilter(csrfFilter());
-		http.addFilter(xssFilter());
+		http.addFilterAt(csrfFilter(), CsrfFilter.class);
+		//http.addFilter(xssFilter());
 
 		//鉴权主入口
-		http.addFilterBefore(securityInterceptor(), FilterSecurityInterceptor.class);
+		http.addFilterBefore(securityInterceptor(), RefererCsrfFilter.class);
 		
 		http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
 

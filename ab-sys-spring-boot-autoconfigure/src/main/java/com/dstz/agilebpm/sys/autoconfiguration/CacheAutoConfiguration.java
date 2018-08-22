@@ -1,10 +1,13 @@
 package com.dstz.agilebpm.sys.autoconfiguration;
 
+import java.util.concurrent.ThreadPoolExecutor;
+
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import com.dstz.base.core.cache.ICache;
 import com.dstz.base.core.cache.impl.MemoryCache;
@@ -60,6 +63,17 @@ public class CacheAutoConfiguration {
 		RedisTemplate template = new RedisTemplate();
 		template.setConnectionFactory(abRedisConnectionFactory);
 		return template;
+	}
+	
+	@Bean(name="taskExecutor")
+	public ThreadPoolTaskExecutor taskExecutor() {
+		ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
+		taskExecutor.setCorePoolSize(5);
+		taskExecutor.setMaxPoolSize(10);
+		taskExecutor.setQueueCapacity(1000);
+		taskExecutor.setKeepAliveSeconds(300);
+		taskExecutor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
+		return taskExecutor;
 	}
 	
 }
