@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import com.dstz.base.api.exception.BusinessException;
-import com.dstz.base.db.api.IdGenerator;
+import com.dstz.base.core.id.IdGenerator;
 import com.dstz.bpm.act.cache.ActivitiDefCache;
 import com.dstz.bpm.act.id.ActivitiIdGenerator;
 import com.dstz.bpm.act.listener.ActEventListener;

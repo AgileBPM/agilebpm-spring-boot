@@ -11,42 +11,43 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "agile-bpm.id-generator")
 public class IdGeneratorProperties {
 
-    /**
-     * 增长段值
-     */
-    private Integer increaseBound = 1000;
+    private long machine = 1;
 
-    /**
-     * 机器名称 多台物理机器集群部署时，需要唯一区分
-     */
-    private String machineName = "1";
+	private byte machineBits = 3;
 
-    /**
-     * ID的基准长度
-     */
-    private Long idBase = 10000000000000L;
+    private byte sequenceBits = 15;
 
-    public Integer getIncreaseBound() {
-        return increaseBound;
-    }
+    private byte timeSequence = 45;
+  
+    public long getMachine() {
+		return machine;
+	}
 
-    public void setIncreaseBound(Integer increaseBound) {
-        this.increaseBound = increaseBound;
-    }
+	public void setMachine(long machine) {
+		this.machine = machine;
+	}
 
-    public String getMachineName() {
-        return machineName;
-    }
+	public byte getMachineBits() {
+		return machineBits;
+	}
 
-    public void setMachineName(String machineName) {
-        this.machineName = machineName;
-    }
+	public void setMachineBits(byte machineBits) {
+		this.machineBits = machineBits;
+	}
 
-    public Long getIdBase() {
-        return idBase;
-    }
+	public byte getSequenceBits() {
+		return sequenceBits;
+	}
 
-    public void setIdBase(Long idBase) {
-        this.idBase = idBase;
-    }
+	public void setSequenceBits(byte sequenceBits) {
+		this.sequenceBits = sequenceBits;
+	}
+
+	public byte getTimeSequence() {
+		return timeSequence;
+	}
+
+	public void setTimeSequence(byte timeSequence) {
+		this.timeSequence = timeSequence;
+	}
 }
