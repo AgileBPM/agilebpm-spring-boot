@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableWebSecurity
 public class SamplesApplication {
-
+	
     public static void main(String[] args) {
         SpringApplication.run(SamplesApplication.class, args);
     }

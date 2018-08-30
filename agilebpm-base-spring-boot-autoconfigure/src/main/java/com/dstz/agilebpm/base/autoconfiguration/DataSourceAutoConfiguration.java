@@ -39,8 +39,7 @@ public class DataSourceAutoConfiguration {
     @ConditionalOnClass(DruidDataSource.class)
     @Bean(initMethod = "init", destroyMethod = "close")
     public DruidDataSource dataSourceDefault(DataSourceProperties dataSourceProperties) {
-
-        return dataSourceProperties.initializeDataSourceBuilder().type(DruidDataSource.class).build();
+    	return (DruidDataSource) dataSourceProperties.initializeDataSourceBuilder().type(DruidDataSource.class).build();
     }
 
     @Bean
