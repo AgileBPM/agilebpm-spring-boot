@@ -9,3 +9,6 @@ spring:
 logging:
   level:
     root: debug
+    
+server:
+  context-path: /agile-bpm-platform

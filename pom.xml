@@ -37,7 +37,10 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<com.dstz.agilebpm.version>1.1.7-SNAPSHOT</com.dstz.agilebpm.version>
+		<ab.wf.version>1.2.1-SNAPSHOT</ab.wf.version>
+		<ab.base.version>1.2.1-SNAPSHOT</ab.base.version>
+		<ab.platform.version>1.2.1-SNAPSHOT</ab.platform.version>
+		<ab.busform.version>1.2.1-SNAPSHOT</ab.busform.version>
 	</properties>
 
 	<dependencyManagement>
@@ -45,32 +48,27 @@
 			<dependency>
 				<groupId>com.dstz.agilebpm</groupId>
 				<artifactId>base-rest</artifactId>
-				<version>${com.dstz.agilebpm.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.dstz.agilebpm</groupId>
-				<artifactId>bpm-rest</artifactId>
-				<version>${com.dstz.agilebpm.version}</version>
+				<version>${ab.base.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.dstz.agilebpm</groupId>
 				<artifactId>sys-rest</artifactId>
-				<version>${com.dstz.agilebpm.version}</version>
+				<version>${ab.platform.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.dstz.agilebpm</groupId>
 				<artifactId>http-security</artifactId>
-				<version>${com.dstz.agilebpm.version}</version>
+				<version>${ab.platform.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.dstz.agilebpm</groupId>
 				<artifactId>wf-rest</artifactId>
-				<version>${com.dstz.agilebpm.version}</version>
+				<version>${ab.wf.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.dstz.agilebpm</groupId>
 				<artifactId>org-rest</artifactId>
-				<version>${com.dstz.agilebpm.version}</version>
+				<version>${ab.platform.version}</version>
 			</dependency>
 
 			<dependency>

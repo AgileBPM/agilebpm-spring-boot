@@ -2,21 +2,16 @@ package com.dstz.agilebpm.security.autoconfiguration;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang3.StringUtils;
-import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ProviderManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,19 +19,17 @@ import org.springframework.security.web.access.intercept.FilterInvocationSecurit
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.csrf.CsrfFilter;
 
-import com.dstz.base.api.constant.BaseStatusCode;
-import com.dstz.base.api.exception.BusinessException;
 import com.dstz.org.api.context.ICurrentContext;
-import com.dstz.org.api.service.UserService;
 import com.dstz.security.authentication.AccessDecisionManagerImpl;
 import com.dstz.security.authentication.FilterInvocationSecurityMetadataSourceImpl;
 import com.dstz.security.authentication.SecurityInterceptor;
+import com.dstz.security.filter.EncodingFilter;
 import com.dstz.security.filter.RefererCsrfFilter;
+import com.dstz.security.filter.RequestThreadFilter;
 import com.dstz.security.filter.XssFilter;
 import com.dstz.security.forbidden.DefaultAccessDeniedHandler;
 import com.dstz.security.forbidden.DefualtAuthenticationEntryPoint;
 import com.dstz.security.login.CustomPwdEncoder;
-import com.dstz.security.login.UserDetailsServiceImpl;
 import com.dstz.security.login.context.LoginContext;
 import com.dstz.security.login.logout.DefualtLogoutSuccessHandler;
 import com.dstz.sys.util.ContextUtil;
@@ -133,7 +126,11 @@ public class AbSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		//http.addFilter(xssFilter());
 
 		//鉴权主入口
-		http.addFilterBefore(securityInterceptor(), RefererCsrfFilter.class);
+		SecurityInterceptor securityInterceptor = abSecurityInterceptor();
+		http.addFilterBefore(securityInterceptor, FilterSecurityInterceptor.class);
+		
+		http.addFilterBefore(new RequestThreadFilter(), CsrfFilter.class);
+		http.addFilterBefore(new EncodingFilter(), CsrfFilter.class);
 		
 		http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
 
@@ -153,7 +150,7 @@ public class AbSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		FilterInvocationSecurityMetadataSourceImpl securityMetadataSource = new FilterInvocationSecurityMetadataSourceImpl();
 		
 		List<String> ingores = new ArrayList<>();
-		String ingroesConfig = abSecurityProperties.getXssIngores();
+		String ingroesConfig = abSecurityProperties.getAuthIngores();
 		if (StringUtils.isNotEmpty(ingroesConfig)) {
 			ingores = Arrays.asList(ingroesConfig.split(","));
 		}
@@ -162,30 +159,33 @@ public class AbSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		return securityMetadataSource;
 	}
 	
-	@Bean
-	protected UserDetailsService userDetailsService() {
-		return new UserDetailsServiceImpl();
+	
+	CustomPwdEncoder customPwdEncoder = new CustomPwdEncoder();
+	@Autowired
+	UserDetailsService userDetailsService;
+	
+	
+	@Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(customPwdEncoder);
+    }
+	
+	@Bean("authenticationManager")
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		AuthenticationManager authenticationManager = super.authenticationManagerBean();
+		return authenticationManager;
 	}
 	
 	
-	/**登录鉴权***/
-	protected AuthenticationManager authenticationManager() {
-		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-		daoAuthenticationProvider.setPasswordEncoder(new CustomPwdEncoder());
-		daoAuthenticationProvider.setUserDetailsService(userDetailsService());
-		
-		ProviderManager providerManager = new ProviderManager(Collections.singletonList(daoAuthenticationProvider));
-		return providerManager;
-	}
-
 	
 	/**
 	 * 鉴权拦截器
 	 * @return
 	 */
-	protected SecurityInterceptor securityInterceptor() {
+	protected SecurityInterceptor abSecurityInterceptor() {
 		SecurityInterceptor intercept = new SecurityInterceptor();
-		intercept.setAuthenticationManager(authenticationManager());
+		
+//		intercept.setAuthenticationManager(authenticationManager);
 		intercept.setAccessDecisionManager(new AccessDecisionManagerImpl());
 		intercept.setSecurityMetadataSource(securityMetadataSource());
 
