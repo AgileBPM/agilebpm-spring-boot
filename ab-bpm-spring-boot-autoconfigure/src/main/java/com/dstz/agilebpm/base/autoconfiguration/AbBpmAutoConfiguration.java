@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.activiti.engine.HistoryService;
@@ -24,15 +23,9 @@ import com.dstz.base.api.exception.BusinessException;
 import com.dstz.base.core.id.IdGenerator;
 import com.dstz.bpm.act.cache.ActivitiDefCache;
 import com.dstz.bpm.act.id.ActivitiIdGenerator;
-import com.dstz.bpm.act.listener.ActEventListener;
 import com.dstz.bpm.act.listener.GlobalEventListener;
+import com.dstz.bpm.api.engine.service.BpmEngineService;
 import com.dstz.bpm.api.exception.BpmStatusCode;
-import com.dstz.bpm.engine.listener.ActivityComplatedListener;
-import com.dstz.bpm.engine.listener.ActivityStartedListener;
-import com.dstz.bpm.engine.listener.InstanceEndEventListener;
-import com.dstz.bpm.engine.listener.InstanceStartEventListener;
-import com.dstz.bpm.engine.listener.TaskCompleteListener;
-import com.dstz.bpm.engine.listener.TaskCreateListener;
 import com.dstz.org.api.service.UserService;
 
 /**
@@ -134,9 +127,13 @@ public class AbBpmAutoConfiguration {
 	
 	
 	@Bean
-	void checkUserOrgEnginService(UserService userService) {
+	BpmEngineService checkUserOrgEnginService(UserService userService) {
+		BpmEngineService bpmEnginService = new BpmEngineService();
 		if(userService == null) { 
-			throw new BusinessException("BPM 模块 依赖 ORG 服务，请检查！",BpmStatusCode.SYSTEM_ERROR);
+			throw new BusinessException("BPM 模块 依赖 ORG 服务，请检查组织服务是否注入成功！",BpmStatusCode.SYSTEM_ERROR);
 		}
+		
+		bpmEnginService.setUserService(userService);
+		return bpmEnginService;
 	}
 }
