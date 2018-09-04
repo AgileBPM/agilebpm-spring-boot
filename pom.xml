@@ -67,6 +67,16 @@
 			</dependency>
 			<dependency>
 				<groupId>com.dstz.agilebpm</groupId>
+				<artifactId>form-rest</artifactId>
+				<version>${ab.busform.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.dstz.agilebpm</groupId>
+				<artifactId>bus-rest</artifactId>
+				<version>${ab.busform.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.dstz.agilebpm</groupId>
 				<artifactId>org-rest</artifactId>
 				<version>${ab.platform.version}</version>
 			</dependency>
