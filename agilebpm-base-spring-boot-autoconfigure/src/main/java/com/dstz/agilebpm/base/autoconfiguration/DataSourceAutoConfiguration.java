@@ -1,10 +1,10 @@
 package com.dstz.agilebpm.base.autoconfiguration;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.dstz.base.dao.baseinterceptor.QueryInterceptor;
 import com.dstz.base.dao.baseinterceptor.SaveInterceptor;
 import com.dstz.base.db.datasource.DynamicDataSource;
 import com.github.pagehelper.PageInterceptor;
-import com.github.pagehelper.QueryInterceptor;
 import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -68,14 +68,14 @@ public class DataSourceAutoConfiguration {
     }
 
     public QueryInterceptor queryInterceptor() {
-
         return new QueryInterceptor();
     }
 
     public SaveInterceptor saveInterceptor() {
-
         return new SaveInterceptor();
     }
+    
+    
 
     @Bean(name = "sqlSessionFactory")
     public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource) {
