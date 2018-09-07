@@ -1,10 +1,10 @@
 package com.dstz.agilebpm.base.autoconfiguration;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.dstz.base.dao.baseinterceptor.QueryInterceptor;
 import com.dstz.base.dao.baseinterceptor.SaveInterceptor;
 import com.dstz.base.db.datasource.DynamicDataSource;
 import com.github.pagehelper.PageInterceptor;
-import com.github.pagehelper.QueryInterceptor;
 import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -68,16 +68,16 @@ public class DataSourceAutoConfiguration {
     }
 
     public QueryInterceptor queryInterceptor() {
-
         return new QueryInterceptor();
     }
 
     public SaveInterceptor saveInterceptor() {
-
         return new SaveInterceptor();
     }
-
-    @Bean(name = "sqlSessionFactory")
+    
+    
+    // MapperLocations TODO 可配置
+    @Bean(name = "abSqlSessionFactory")
     public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource) {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
@@ -103,18 +103,17 @@ public class DataSourceAutoConfiguration {
         }
         return resources.toArray(new Resource[resources.size()]);
     }
-
-    @Bean
+ // DAO 层 BasePackage TODO 可配置
+    @Bean("abMapperScannerConfigurer")
     public MapperScannerConfigurer mapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();
-        mapperScannerConfigurer.setSqlSessionFactoryBeanName("sqlSessionFactory");
+        mapperScannerConfigurer.setSqlSessionFactoryBeanName("abSqlSessionFactory");
         mapperScannerConfigurer.setBasePackage("com.dstz.**.dao");
         return mapperScannerConfigurer;
     }
 
-    @Bean
-    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("sqlSessionFactory") SqlSessionFactoryBean sqlSessionFactory) throws Exception {
-
+    @Bean("abSqlSessionTemplate")
+    public SqlSessionTemplate sqlSessionTemplate(@Qualifier("abSqlSessionFactory") SqlSessionFactoryBean sqlSessionFactory) throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory.getObject());
     }
 }

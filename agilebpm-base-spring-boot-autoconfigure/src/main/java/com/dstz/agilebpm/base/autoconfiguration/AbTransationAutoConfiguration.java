@@ -9,7 +9,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
 /**
- * 数据源配置
+ * 数据源配置 TODO test
  */
 @Configuration
 public class AbTransationAutoConfiguration {
@@ -29,7 +29,7 @@ public class AbTransationAutoConfiguration {
 		return transactionInterceptor;
 	}
 	
-	@Bean(name="abtansactionAutoProxy")
+	@Bean(name="abTansactionAutoProxy")
 	BeanNameAutoProxyCreator tansactionAutoProxy() {
 		BeanNameAutoProxyCreator beanNameAutoProxyCreator = new BeanNameAutoProxyCreator();
 		beanNameAutoProxyCreator.setProxyTargetClass(true);
