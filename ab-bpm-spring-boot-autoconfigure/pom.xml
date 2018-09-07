@@ -24,7 +24,7 @@
         </dependency>
  
        <dependency>
-            <groupId>com.dstz.agilebpm</groupId>
+            <groupId>com.gitee.agile-bpm</groupId>
             <artifactId>wf-rest</artifactId>
         </dependency>
 

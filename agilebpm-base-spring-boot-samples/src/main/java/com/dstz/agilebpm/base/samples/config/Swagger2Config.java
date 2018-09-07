@@ -24,7 +24,7 @@ public class Swagger2Config {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo()).select()
                 //扫描指定包中的swagger注解
-                //扫描所有有注解的api，用这种方式更灵活
+                //扫描所有有注解的ApiOperation，用这种方式更灵活
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
                 .build();
@@ -32,8 +32,8 @@ public class Swagger2Config {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("TESTssss")
-                .description("rest service")
+                .title("AgileBPM API")
+                .description("敏捷工作流开发平台接口文档")
                 .termsOfServiceUrl("")
                 .version("1.0")
                 .build();
