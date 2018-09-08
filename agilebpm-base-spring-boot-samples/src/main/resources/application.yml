@@ -12,3 +12,8 @@ logging:
     
 server:
   context-path: /agile-bpm-platform
+  
+
+ab:
+  security:
+    auth-ingores: /login.*,/swagger-*,/v2/api-docs*
