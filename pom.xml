@@ -61,7 +61,7 @@
 				<version>${ab.platform.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.gitee.agile-bpm</groupId>
+				<groupId>com.dstz.agilebpm</groupId>
 				<artifactId>wf-rest</artifactId>
 				<version>${ab.wf.version}</version>
 			</dependency>
