@@ -10,8 +10,6 @@ import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import com.dstz.sys.email.MailUtil;
-import com.dstz.sys.email.model.MailSetting;
 import com.dstz.sys.simplemq.RedisConsumer;
 
 /**
@@ -71,23 +69,4 @@ public class SimpleMQAutoConfiguration {
 		return redisMessageListenerContainer;
 	}
 	 
-	@Bean
-	MailSetting abMailSeting(MQMailConfigProperties mQMailConfigProperties ) {
-		MailSetting mailSetting = new MailSetting();
-		mailSetting.setSendHost(mQMailConfigProperties.getSendHost());
-		mailSetting.setSendPort(String.valueOf(mQMailConfigProperties.getSendPort()));
-		mailSetting.setSSL(mQMailConfigProperties.isSSL());
-		mailSetting.setProtocal("smtp");
-		mailSetting.setValidate(true);
-		mailSetting.setNickName(mQMailConfigProperties.getNickName());
-		mailSetting.setMailAddress(mQMailConfigProperties.getMailAddress());
-		mailSetting.setPassword(mQMailConfigProperties.getPassword());
-		return mailSetting;
-	}
-	
-	@Bean
-	MailUtil mailSender(MailSetting abMailSeting ) {
-		return new MailUtil(abMailSeting);
-	}
-	
 }
