@@ -43,6 +43,20 @@
 		<ab.busform.version>1.2.2-SNAPSHOT</ab.busform.version>
 	</properties>
 
+	<repositories>
+		<repository>
+			<id>nexus-agile-bpm</id>
+			<url>http://nexus.agilebpm.cn/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>nexus-agile-bpm</id>
+			<url>http://nexus.agilebpm.cn/nexus/content/groups/public/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
