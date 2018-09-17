@@ -37,7 +37,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ab.wf.version>1.2.4-SNAPSHOT</ab.wf.version>
+		<ab.wf.version>1.2.3</ab.wf.version>
 		<ab.base.version>1.2.2-SNAPSHOT</ab.base.version>
 		<ab.platform.version>1.2.2-SNAPSHOT</ab.platform.version>
 		<ab.busform.version>1.2.2-SNAPSHOT</ab.busform.version>
