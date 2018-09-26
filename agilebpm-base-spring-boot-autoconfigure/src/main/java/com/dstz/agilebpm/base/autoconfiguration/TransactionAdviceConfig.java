@@ -1,4 +1,4 @@
-package com.dstz.agilebpm.base.samples.config;
+package com.dstz.agilebpm.base.autoconfiguration;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.aop.Advisor;
@@ -29,7 +29,7 @@ public class TransactionAdviceConfig {
 	@Autowired
 	private PlatformTransactionManager transactionManager;
 
-	@Bean
+	@Bean(name = "abTransactionInterceptor")
 	public TransactionInterceptor txAdvice() {
 
 		DefaultTransactionAttribute requiredDTA = new DefaultTransactionAttribute();
@@ -48,7 +48,7 @@ public class TransactionAdviceConfig {
 		return new TransactionInterceptor(transactionManager, source);
 	}
 
-	@Bean
+	@Bean(name = "abAdvisor")
 	public Advisor txAdviceAdvisor() {
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
 		pointcut.setExpression(AOP_POINTCUT_EXPRESSION);
