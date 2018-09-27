@@ -2,9 +2,16 @@ package com.dstz.agilebpm.base.samples.config;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+
+import org.apache.catalina.Context;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
+import org.springframework.boot.context.embedded.tomcat.TomcatContextCustomizer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -29,16 +36,19 @@ public class ExternalStaticResourceConfig extends WebMvcConfigurerAdapter {
 	    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		 	if(StringUtil.isEmpty(externalResourceDirectory) || StringUtil.isEmpty(externalResourcePath) )return;
 		 	
-	        registry.addResourceHandler(externalResourcePath +"/**").addResourceLocations("file:"+externalResourceDirectory);   
-	        // registry.addResourceHandler("/bpm-explorer/**").addResourceLocations("file:C:\Users\miao_pc\git\agile-bpm-basic\bpm-explorer");   
+	       // registry.addResourceHandler("/bpm-explorer/**").addResourceLocations("file:"+externalResourceDirectory);   
+	         registry.addResourceHandler("/bpm-explorer/**").addResourceLocations("file:C:/Users/Jeff/git/agile-bpm-basic/bpm-explorer");   
 	    }
 	 //https://blog.csdn.net/u013194072/article/details/79014238
-	  @Bean
+	 /* @Bean
 	    public EmbeddedServletContainerFactory embeddedServletContainerFactory() {
 	        TomcatEmbeddedServletContainerFactory embeddedServletContainerFactory = new TomcatEmbeddedServletContainerFactory();
-	     //   embeddedServletContainerFactory.addContextCustomizers(tomcatContextCustomizers);
-	        return embeddedServletContainerFactory;
-	    }
-
+	        
+	        ServletContextInitializer initializer = new ServletRegistrationBean();
+	        
+	        embeddedServletContainerFactory.addInitializers(initializer);
+	        
+	       return embeddedServletContainerFactory;
+	  }*/
 
 }
