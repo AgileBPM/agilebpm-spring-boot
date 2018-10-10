@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.106.140.247:3306/sit?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    username: sit
+    password: sit
+    dbType: mysql
+
+logging:
+  level:
+    root: debug
+    
+server:
+  context-path: /agile-bpm-platform
+  
+
+ab:
+  security:
+    auth-ingores: /login.*,/swagger-*,/v2/api-docs*,/bpm-explorer
+    
+
+s.k: 5392537a203272132719aad01638fc99d0258d67e6cb7c29b76672a4cb47c18f0a16f85c569009d02da55598643b4169
+
+ab.external.resource.path: /bpm-explorer
+ab.external.resource.directory: C:\Users\Jeff\git\agile-bpm-basic\bpm-explorer

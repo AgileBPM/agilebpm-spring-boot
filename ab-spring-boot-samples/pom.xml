@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<groupId>com.dstz</groupId>
+		<artifactId>agilebpm-base-spring-boot</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>ab-spring-boot-samples</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>com.zaxxer</groupId>
+					<artifactId>HikariCP</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>com.dstz</groupId>
+			<artifactId>agilebpm-base-spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.dstz</groupId>
+			<artifactId>ab-security-spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.dstz.agilebpm</groupId>
+			<artifactId>org-rest</artifactId>
+		</dependency>
+
+		<dependency>
+				<groupId>com.dstz.agilebpm</groupId>
+				<artifactId>form-rest</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.dstz.agilebpm</groupId>
+			<artifactId>bus-rest</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.dstz</groupId>
+			<artifactId>ab-sys-spring-boot-starter</artifactId>
+		</dependency>
+		
+		 <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>2.6.1</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>mapstruct</artifactId>
+                    <groupId>org.mapstruct</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>2.6.1</version>
+        </dependency>
+        
+         <dependency>
+            <groupId>com.dstz</groupId>
+            <artifactId>ab-base-ui</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+ 		<dependency> 
+			<groupId>com.dstz</groupId>
+			<artifactId>ab-bpm-spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+
+	</dependencies>
+</project>

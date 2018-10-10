@@ -133,7 +133,8 @@ public class AbSecurityConfiguration extends WebSecurityConfigurerAdapter {
 		http.addFilterBefore(new EncodingFilter(), CsrfFilter.class);
 		
 		http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
-
+		
+		http.headers().frameOptions().disable();
 		http.csrf().disable();
 	}
 

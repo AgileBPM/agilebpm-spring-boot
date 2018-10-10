@@ -1,0 +1,43 @@
+<!doctype html>
+<html ng-app="base">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link href="../../build/common/ngEdit.css" rel="stylesheet">
+		<script type="text/javascript" src="../../build/common/ngEdit.js"></script>
+		<script type="text/javascript">
+			var ComplateController = ['$scope','baseService',function(scope,baseService){
+				scope.flowParam = window.passData;
+				
+				scope.usefulOpinion = [ "同意", "请注意，情况复杂！", "情况紧急，请尽快处理！", 	"驳回"  ];
+				
+				scope.setOpinion = function(str){
+					scope.flowParam.opinion =  str;
+				}
+			}];
+			
+			function isValidate(){
+			 var flowParam = AngularUtil.getScope().flowParam ;
+				if(!flowParam.opinion){
+					$.Toast.warning("请填写意见！");
+					return false ;
+				}
+				return true;
+			}
+		</script>
+	</head>
+	<body class="panel success" ng-controller="ComplateController">
+			<table class="form-table" style="margin-top: 5px">
+				<tr>								
+					<th><span>备注意见:</span></th>
+					<td>
+						 <textarea rows="4" cols="20" class="form-control" ng-model="flowParam.opinion" ab-validate="{required:true}"></textarea>
+					</td>								
+				</tr>
+				<th>常用语</th>
+					<td >
+				   		<a class="btn btn-outline btn-primary btn-sm" style="margin-right: 20px" ng-repeat="opinion in usefulOpinion" ng-click="setOpinion(opinion)">{{opinion}}</a>
+					</td>
+				
+			</table>
+	</body>
+</html>

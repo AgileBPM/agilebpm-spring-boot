@@ -16,10 +16,10 @@ server:
 
 ab:
   security:
-    auth-ingores: /login.*,/swagger-*,/v2/api-docs*
+    auth-ingores: /login.*,/swagger-*,/v2/api-docs*,/bpm-explorer
     
 
 s.k: 5392537a203272132719aad01638fc99d0258d67e6cb7c29b76672a4cb47c18f0a16f85c569009d02da55598643b4169
 
 ab.external.resource.path: /bpm-explorer
-ab.external.resource.directory: C:\Users\miao_pc\git\agile-bpm-basic\bpm-explorer
+ab.external.resource.directory: C:\Users\Jeff\git\agile-bpm-basic\bpm-explorer
