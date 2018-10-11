@@ -77,7 +77,7 @@
         
          <dependency>
             <groupId>com.dstz</groupId>
-            <artifactId>ab-base-ui</artifactId>
+            <artifactId>agilebpm-ui</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 

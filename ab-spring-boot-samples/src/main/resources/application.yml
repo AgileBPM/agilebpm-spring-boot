@@ -11,7 +11,7 @@ logging:
     root: debug
     
 server:
-  context-path: /agile-bpm-platform
+  context-path: /
   
 
 ab:
