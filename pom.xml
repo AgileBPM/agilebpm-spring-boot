@@ -5,21 +5,23 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.dstz</groupId>
-	<artifactId>agilebpm-base-spring-boot</artifactId>
+	<artifactId>agilebpm-spring-boot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
-		<module>agilebpm-base-spring-boot-autoconfigure</module>
-		<module>agilebpm-base-spring-boot-starter</module>
-		<module>agilebpm-base-spring-boot-samples</module>
+		<module>agilebpm-base-autoconfigure</module>
+		<module>agilebpm-base-starter</module>
 
-		<module>ab-sys-spring-boot-autoconfigure</module>
-		<module>ab-sys-spring-boot-starter</module>
+		<module>agilebpm-sys-autoconfigure</module>
+		<module>agilebpm-sys-starter</module>
 
-		<module>ab-security-spring-boot-autoconfigure</module>
-		<module>ab-security-spring-boot-starter</module>
+		<module>agilebpm-security-autoconfigure</module>
+		<module>agilebpm-security-starter</module>
 
-		<module>ab-bpm-spring-boot-autoconfigure</module>
-		<module>ab-bpm-spring-boot-starter</module>
+		<module>agilebpm-wf-autoconfigure</module>
+		<module>agilebpm-wf-starter</module>
+		
+		<module>agilebpm-ui</module>
+		<module>agilebpm-spring-boot-samples</module>
 	</modules>
 	<packaging>pom</packaging>
 
@@ -97,25 +99,25 @@
 
 			<dependency>
 				<groupId>com.dstz</groupId>
-				<artifactId>agilebpm-base-spring-boot-starter</artifactId>
+				<artifactId>agilebpm-base-starter</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.dstz</groupId>
-				<artifactId>ab-security-spring-boot-starter</artifactId>
+				<artifactId>agilebpm-security-starter</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>com.dstz</groupId>
-				<artifactId>ab-sys-spring-boot-starter</artifactId>
+				<artifactId>agilebpm-sys-starter</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			
 			<dependency>
 				<groupId>com.dstz</groupId>
-				<artifactId>ab-bpm-spring-boot-starter</artifactId>
+				<artifactId>agilebpm-wf-starter</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 		</dependencies>
