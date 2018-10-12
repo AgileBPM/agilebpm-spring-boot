@@ -1,16 +1,14 @@
-var overallViewApp = angular.module('overallViewApp', [ 'formDirective', 'arrayToolService', 'base' ]);
+var overallViewApp = angular.module('overallViewApp', [ 'baseDirective' ]);
 
 overallViewApp.controller("overallViewController", [ '$scope', 'baseService', 'ArrayToolService','$http', function($scope, baseService, ArrayToolService, $http) {
 		$scope.ArrayTool = ArrayToolService;
 		$scope.defId = defId;
 		
 		$scope.getOverallViewByDefId = function(){
-			var param = {defId:defId,topDefKey:topDefKey};
-			var defer = baseService.postForm(__ctx+"/flow/overallView/getOverallView",param);
-			defer.then(function(data){
-				$scope.overallView = data;
-			},function(code){
-				$.topCall.error("获取异常"+code);
+			var param = {defId:defId};
+			var defer = baseService.postForm(__ctx+"/bpm/overallView/getOverallView",param);
+			$.getResultData(defer,function(data){
+				$scope.overallView = data.defSetting;
 			});
 		}
 		if(defId){
@@ -19,17 +17,17 @@ overallViewApp.controller("overallViewController", [ '$scope', 'baseService', 'A
 		
 		// 一览页保存
 		$scope.saveOverallView = function(){
-			var defer = baseService.post(__ctx+"/flow/overallView/overallViewSave",$scope.overallView);
+			var defer = baseService.post(__ctx+"/bpm/overallView/overallViewSave",$scope.overallView);
 			defer.then(function(data){
 				if(data.result==1){
-					$.topCall.success("保存成功！");
+					$.Dialog.success("保存成功！");
 					$scope.getOverallViewByDefId();
 				}else{
-					$.topCall.error("保存异常"+data.message);
+					$.Dialog.error("保存异常"+data.message);
 				}
 				
 			},function(code){
-				$.topCall.error("获取流程定义异常"+code);
+				$.Dialog.error("获取流程定义异常"+code);
 			});
 		}
 		
@@ -40,7 +38,7 @@ overallViewApp.controller("overallViewController", [ '$scope', 'baseService', 'A
 			for(var key in $scope.importOverallViewMap){
 				var obj = $scope.importOverallViewMap[key][0];
 				if(obj.defId){
-					$.topCall.error("数据异常");
+					$.Dialog.error("数据异常");
 					console.error($scope.importOverallViewMap);
 					return;
 				}
@@ -48,29 +46,29 @@ overallViewApp.controller("overallViewController", [ '$scope', 'baseService', 'A
 				overallViewList.push(obj);
 			}
 			if(overallViewList.length==0){
-				$.topCall.error("要上传的数据不存在！");
+				$.Dialog.error("要上传的数据不存在！");
 				return;
 			}
 			
-			var defer = baseService.post(__ctx+"/flow/overallView/importSave",overallViewList);
+			var defer = baseService.post(__ctx+"/bpm/overallView/importSave",overallViewList);
 			defer.then(function(data){
 				if(data.result==1){
-					$.topCall.success(data.message,function(){
+					$.Dialog.success(data.message,function(){
 						window.location = "overallViewUpload";
 					});
 				}else{
-					$.topCall.error("保存异常"+data.message);
+					$.Dialog.error("保存异常"+data.message);
 				}
 				
 			},function(code){
-				$.topCall.error("获取流程定义异常"+code);
+				$.Dialog.error("获取流程定义异常"+code);
 			});
 		}
 		
 		$scope.importPreview = function(){
 			var filed = document.querySelector('input[name=xmlFile]').files[0];
 			if(!filed){
-				$.topCall.error("请先选择文件");
+				$.Dialog.error("请先选择文件");
 				return;
 			}
 			
@@ -78,12 +76,12 @@ overallViewApp.controller("overallViewController", [ '$scope', 'baseService', 'A
 			fd.append('xmlFile', filed); 
 			$http({
 	              method:'POST',
-	              url: __ctx + "/flow/overallView/importPreview",
+	              url: __ctx + "/bpm/overallView/importPreview",
 	              data: fd,
 	              headers: {'Content-Type':undefined},transformRequest: angular.identity})   
 	              .success(function(data) {
 	            	  if(data.message){
-	            		  $.topCall.error(data.message);
+	            		  $.Dialog.error(data.message);
 	            		  return
 	            	  }
 	            	  $scope.importOverallViewMap = data;
@@ -106,6 +104,7 @@ overallViewApp.controller("overallViewController", [ '$scope', 'baseService', 'A
 			}
 			this.btn.isShow = true;
 		}
+		
 		//让每个格子高度适配
 		$scope.fixConfsHeight = function(){
 			var overallConfs = $(".overallConf");
@@ -123,43 +122,10 @@ overallViewApp.controller("overallViewController", [ '$scope', 'baseService', 'A
 					}
 					
 				});
-				
-				
 			}
-			
 			
 		}
-		//判断节点属性是否一致
-		$scope.getNodeIsSame = function(nodeConf,compareOverallView,path){
-			// 找到conf
-			var compareNode = null;
-			var nodeId = null;
-			for(var i=0,node;node = compareOverallView.nodeConfs[i++];){
-				if(node.nodeId===nodeConf.nodeId){
-					compareNode = node;
-					nodeId = node.nodeId;
-					break;
-				}
-			}
-			if(compareNode == null) return false;
-			
-			try {
-				var newVal = eval("nodeConf."+path);
-				var oldVal = eval("compareNode."+path);
-				
-				if(typeof newVal == "object" ){ newVal = JSON.stringify(newVal)};
-				if(typeof oldVal == "object" ){ oldVal = JSON.stringify(oldVal)};
-				
-				if(typeof  newVal == "string"){ newVal = newVal.trim(); };
-				if(typeof  oldVal == "string"){ oldVal = oldVal.trim(); };
-				if(newVal == undefined){ newVal = ""; };
-				if(oldVal == undefined){ oldVal = ""; };
-				
-				return newVal === oldVal;
-			} catch (e) {
-				return false;
-			}
-		}
+	 
 		
 		$scope.getIsSame = function(newObj,oldObj,path){
 			try {
@@ -172,6 +138,12 @@ overallViewApp.controller("overallViewController", [ '$scope', 'baseService', 'A
 				if(typeof  oldVal == "string"){
 					oldVal = oldVal.trim();
 				}
+				
+				if(typeof newVal == "object" ){ newVal = JSON.stringify(newVal)};
+				if(typeof oldVal == "object" ){ oldVal = JSON.stringify(oldVal)};
+				
+				if(typeof  newVal == "string"){ newVal = newVal.trim(); };
+				if(typeof  oldVal == "string"){ oldVal = oldVal.trim(); };
 				
 				if(newVal == undefined){ newVal = ""; }
 				if(oldVal == undefined){ oldVal = ""; }
@@ -346,7 +318,7 @@ overallViewApp.directive('abTrim', function() {
     		
     		scope.getBoCodes = function(){
     			var boCodes = "";
-    			for(var i=0,dm;dm= scope.$parent.bpmDefSetting.flow.dataModelList[i++];){
+    			for(var i=0,dm;dm= scope.$parent.overallView.flow.dataModelList[i++];){
     				if(boCodes){boCodes = boCodes + ","};
     				boCodes = boCodes + dm.code;
     			}
@@ -386,8 +358,8 @@ overallViewApp.directive('abTrim', function() {
 		    		<td>PC端</td>                                                                                                                                  \
 		    		<td>  {{bpmForm.name}}  </td>                                                                                                                  \
 		    		<td>                                                                                                                                           \
-		    			<a href="javascript:void(0);" class="btn btn-info btn-sm glyphicon glyphicon-search" ng-click="selectForm(true)"></a>                      \
-		    			<a href="javascript:void(0);" class="btn btn-info btn-sm glyphicon glyphicon-repeat" ng-click="clearForm(bpmForm)"></a>                    \
+		    			<a href="javascript:void(0);" class="btn btn-info btn-sm fa fa-search" ng-click="selectForm(true)"></a>                      \
+		    			<a href="javascript:void(0);" class="btn btn-info btn-sm fa fa-repeat" ng-click="clearForm(bpmForm)"></a>                    \
 		    		</td>                                                                                                                                          \
 		    	</tr>                                                                                                                                              \
 		    	<tr ng-if="bpmForm.type==\'FRAME\'">                                                                                                               \
@@ -399,8 +371,8 @@ overallViewApp.directive('abTrim', function() {
 		    		<td>移动端</td>                                                                                                                                \
 		    		<td>  {{mobileForm.name}} </td>                                                                                                                \
 		    		<td>                                                                                                                                           \
-		    			<a href="javascript:void(0);" class="btn btn-info btn-sm  glyphicon glyphicon-search" ng-click="selectForm(false)"></a>                    \
-		    			<a href="javascript:void(0);" class="btn btn-info btn-sm glyphicon glyphicon-repeat" ng-click="clearForm(mobileForm)"></a>                 \
+		    			<a href="javascript:void(0);" class="btn btn-info btn-sm  fa fa-search" ng-click="selectForm(false)"></a>                    \
+		    			<a href="javascript:void(0);" class="btn btn-info btn-sm fa fa-repeat" ng-click="clearForm(mobileForm)"></a>                 \
 		    		</td>									                                                                                                       \
 		    	</tr>                                                                                                                                              \
 		    	                                                                                                                                                   \

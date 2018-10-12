@@ -10,7 +10,6 @@ var panelApp = angular.module('workbenchApp', ['baseDirective']);
 				queryParam.dataType_ = panel.dataType;
 				queryParam.dataSource_ = panel.dataSource;
 				var defer = baseService.postForm( __ctx+"/sys/workbenchPanel/getPanelData",queryParam);
-				
 				$.getResultData(defer,function(data){
 					scope[panel.alias] = data;
 					if(fn)fn(data);

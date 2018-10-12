@@ -6,8 +6,8 @@
 	</head>
 	<body>
 		<fieldset class="scheduler-border" ng-if="showGlobalConf" name="flowConfFieldset">
-			<legend style="width: 90px; border-bottom: 0; margin-bottom: 10px;">
-				<span>流程配置</span>
+			<legend style="width: 120px; border-bottom: 0; margin-bottom: 10px;">
+				<span>流程全局配置</span>
 			</legend>
 			<div title="全局表单设置 "  style="width:100%;padding:5px;" >
 				<div title="全局表单" type="global" bpm-form="overallView.flow.globalForm" mobile-form="overallView.flow.globalMobileForm" ></div>
@@ -51,9 +51,9 @@
 		</fieldset>
 		<fieldset class="scheduler-border" ng-repeat="(nodeId,nodeConf) in overallView.nodeMap" ng-if="nodeConf.nodeType !='parallelGateway'" name="{{nodeConf.nodeId}}Fieldset">
 			<legend style="width: 320px; border-bottom: 0; margin-bottom: 10px;">
-				<div style="text-align: center;">{{nodeConf.nodeName}}一 {{nodeConf.nodeId}}</div>
+				<div style="text-align: center;">{{nodeConf.nodeName}}一 {{nodeConf.nodeId}}-{{nodeConf.nodeType}}</div>
 			</legend>
-		  	<div ng-if="nodeConf.nodeType=='userTask' || nodeConf.nodeType=='start' || nodeConf.nodeType=='end'">
+		  	<div ng-if="nodeConf.nodeType=='UserTask' || nodeConf.nodeType=='StartNoneEvent' || nodeConf.nodeType=='EndNoneEvent'">
 				<div title="表单设置 " ab-tip="{position:{my:'bottom center',at:'top center'}}" style="width:100%;padding:5px;" ng-if="showForm">
 					   <div title="节点表单" type="node" bpm-form="nodeConf.form" mobile-form="nodeConf.mobileForm" ></div>
 				</div>
@@ -91,19 +91,19 @@
 		  	 	<table class="table-form" ng-if="showScript">
 			        <tbody>
 			          <tr id="{{nodeConf.nodeId}}-nodeScript">  
-			          		<td  ab-tip="{position:{my:'bottom center',at:'top center'}}" title="任务创建时脚本" ng-if="nodeConf.nodeType=='userTask'"> 
+			          		<td  ab-tip="{position:{my:'bottom center',at:'top center'}}" title="任务创建时脚本" ng-if="nodeConf.nodeType=='UserTask'"> 
 			          			<textarea ng-model="plugin.nodeScript.taskCreate" ab-trim rows="2" class="form-control"></textarea>  
 			          		</td> 
-			          		<td ab-tip="{position:{my:'bottom center',at:'top center'}}" title="任务完成时脚本" ng-if="nodeConf.nodeType=='userTask'"> 
+			          		<td ab-tip="{position:{my:'bottom center',at:'top center'}}" title="任务完成时脚本" ng-if="nodeConf.nodeType=='UserTask'"> 
 			          			<textarea id="{{nodeConf.nodeId}}" ab-trim ng-model="plugin.nodeScript.taskComplete" rows="2" class="form-control"></textarea>
 			          		</td>
-			          		<td ab-tip="{position:{my:'bottom center',at:'top center'}}"  title="流程创建时脚本" ng-if="nodeConf.nodeType=='start'"> 
+			          		<td ab-tip="{position:{my:'bottom center',at:'top center'}}"  title="流程创建时脚本" ng-if="nodeConf.nodeType=='StartNoneEvent'"> 
 			          			<textarea ab-trim ng-model="nodeConf.scriptMap.start" rows="2" class="form-control"></textarea>  
 			          		</td>
-			          		<td ab-tip="{position:{my:'bottom center',at:'top center'}}"  title="流程完成时执行脚本"  ng-if="nodeConf.nodeType=='end'"> 
+			          		<td ab-tip="{position:{my:'bottom center',at:'top center'}}"  title="流程完成时执行脚本"  ng-if="nodeConf.nodeType=='EndNoneEvent'"> 
 			          			<textarea ab-trim rows="2" ng-model="plugin.nodeScript.end" class="form-control"></textarea>  
 			          		</td> 
-			          	   <td ab-tip="{position:{my:'bottom center',at:'top center'}}"  title="流程人工结束时执行脚本"  ng-if="nodeConf.nodeType=='end'"> 
+			          	   <td ab-tip="{position:{my:'bottom center',at:'top center'}}"  title="流程人工结束时执行脚本"  ng-if="nodeConf.nodeType=='EndNoneEvent'"> 
 			          	   		<textarea ab-trim rows="2" ng-model="plugin.nodeScript.manualend"  class="form-control"></textarea>
 			          	   </td>
 			          </tr>

@@ -13,13 +13,13 @@ logging:
 server:
   context-path: /
   
+## security:
+##  ignored:  [/agilebpm-ui/** ,/css/**, /js/**,/images/**,/webjars/**,/**/favicon.ico]
 
 ab:
   security:
     auth-ingores: /login.*,/agilebpm-ui*,/index.html
+ 
 ## /swagger-*,/v2/api-docs*,   swagger 免登陆
 
 s.k: 5392537a203272132719aad01638fc99d0258d67e6cb7c29b76672a4cb47c18f0a16f85c569009d02da55598643b4169
-
-ab.external.resource.path: /bpm-explorer
-ab.external.resource.directory: C:\Users\Jeff\git\agile-bpm-basic\bpm-explorer
