@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://47.106.140.247:3306/sit?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
-    username: sit
-    password: sit
+    url: jdbc:mysql://47.106.140.247:3306/demo?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    username: root
+    password: bairimeng
     dbType: mysql
 
 logging:
@@ -15,11 +15,24 @@ server:
   
 ## security:
 ##  ignored:  [/agilebpm-ui/** ,/css/**, /js/**,/images/**,/webjars/**,/**/favicon.ico]
+## /swagger-*,/v2/api-docs*,   swagger 免登陆
 
 ab:
   security:
     auth-ingores: /login.*,/agilebpm-ui*,/index.html
- 
-## /swagger-*,/v2/api-docs*,   swagger 免登陆
+  redis: 
+      host: 47.106.140.247
+  mail:
+    mail-address: agileBpm@qq.com
+    nick-name: AgileBPM
+    password: fywouffpohiibdee
+    send-host: smtp.qq.com
+    send-port: 465
+    
+    
+    
+
+   
+
 
 s.k: 5392537a203272132719aad01638fc99d0258d67e6cb7c29b76672a4cb47c18f0a16f85c569009d02da55598643b4169
