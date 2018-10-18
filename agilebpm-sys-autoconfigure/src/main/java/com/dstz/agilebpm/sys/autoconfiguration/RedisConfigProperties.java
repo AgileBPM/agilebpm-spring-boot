@@ -11,8 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "ab.redis")
 public class RedisConfigProperties {
 	/**
-	 * 系统是否使用 Redis 缓存 否则使用   com.dstz.base.core.cache.impl.MemoryCache
-	 * mq 是默认使用redis的
+	 * 系统缓存是否使用 Redis:  false 则使用 系统内存  com.dstz.base.core.cache.impl.MemoryCache ConcurrentHashMap
 	 */
 	private boolean useRedisCache = false;
 	private String host = "";

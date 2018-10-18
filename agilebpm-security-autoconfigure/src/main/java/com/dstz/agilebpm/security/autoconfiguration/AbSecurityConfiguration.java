@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -162,7 +164,7 @@ public class AbSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	
 	CustomPwdEncoder customPwdEncoder = new CustomPwdEncoder();
-	@Autowired
+	@Resource(name="userDetailsService")
 	UserDetailsService userDetailsService;
 	
 	

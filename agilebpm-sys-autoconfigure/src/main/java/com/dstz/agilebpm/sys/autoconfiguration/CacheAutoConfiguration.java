@@ -33,8 +33,8 @@ public class CacheAutoConfiguration {
 		return new RedisCache<>();
 	}
 
-	@Bean(name="abPoolConfig")
-	public JedisPoolConfig abPoolConfig(RedisConfigProperties redisConfig) {
+	@Bean(name="abJedisPoolConfig")
+	public JedisPoolConfig JedisPoolConfig(RedisConfigProperties redisConfig) {
 		JedisPoolConfig poolConfig = new JedisPoolConfig();
 		poolConfig.setMaxIdle(redisConfig.getMaxIdle());
 		poolConfig.setMaxTotal(redisConfig.getMaxTotal());

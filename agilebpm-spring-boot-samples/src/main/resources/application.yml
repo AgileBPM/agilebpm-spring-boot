@@ -22,6 +22,7 @@ ab:
     auth-ingores: /login.*,/agilebpm-ui*,/index.html
   redis: 
       host: 47.106.140.247
+      use-redis-cache: false
   mail:
     mail-address: agileBpm@qq.com
     nick-name: AgileBPM
@@ -29,7 +30,7 @@ ab:
     send-host: smtp.qq.com
     send-port: 465
     
-    
+
     
 
    

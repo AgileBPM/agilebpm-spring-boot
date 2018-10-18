@@ -1,5 +1,6 @@
 package com.dstz.agilebpm.sys.autoconfiguration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,9 @@ import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import com.dstz.sys.simplemq.RedisConsumer;
+import com.dstz.sys.util.EmailUtil;
+
+import cn.hutool.extra.mail.MailAccount;
 
 /**
  * 缓存相关配置
@@ -21,7 +25,8 @@ import com.dstz.sys.simplemq.RedisConsumer;
 @Configuration
 @EnableConfigurationProperties(MQMailConfigProperties.class)
 public class SimpleMQAutoConfiguration {
-	
+	@Autowired
+	MQMailConfigProperties mQMailConfigProperties;
 	@Bean
 	public JdkSerializationRedisSerializer abSerialization() {
 		return new JdkSerializationRedisSerializer();
@@ -52,8 +57,24 @@ public class SimpleMQAutoConfiguration {
 		messageListenerAdapter.setSerializer(abSerialization);
 		messageListenerAdapter.setStringSerializer(abStringserialization);
 		messageListenerAdapter.setDefaultListenerMethod("receiveMessage");
+		messageListenerAdapter.setDelegate(abMessageListener);
+		
+		setEmailConfiguration();
 		
 		return messageListenerAdapter;
+	}
+
+	private void setEmailConfiguration() {
+		MailAccount account = new MailAccount();
+		
+		account.setHost(mQMailConfigProperties.getSendHost());
+		account.setPort(mQMailConfigProperties.getSendPort());
+		account.setFrom(mQMailConfigProperties.getMailAddress());
+		account.setUser(mQMailConfigProperties.getNickName());
+		account.setPass(mQMailConfigProperties.getPassword());
+		account.setSslEnable(mQMailConfigProperties.isSSL());
+		
+		EmailUtil.setAccount(account);
 	}
 
 	@Bean
