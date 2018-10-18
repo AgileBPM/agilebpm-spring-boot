@@ -1,8 +1,8 @@
 # agilebpm-base-spring-boot
 
-#### 项目介绍
+## 项目介绍
 
-本模块集成了spring-boot的特性，将依赖引入快速启动项目，做到少量配置，去除xml配置
+本项目旨在让 spring boot 项目 以比较简单的形式整合 AgileBPM 流程服务
 
 #### 软件架构
 软件架构说明
