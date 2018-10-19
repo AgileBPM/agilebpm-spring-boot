@@ -79,7 +79,7 @@
 					<tbody ng-if="data.style=='list'">
 						<tr ng-repeat="field in data.displayFields">
 							<td>
-								<input type="text" ng-model="field.columnName" class="form-control" />
+								<input type="text" ng-model="field.columnName" class="form-control" readonly/>
 								<a ng-if="$index==0" href="javaScript:void(0)" style="text-decoration: none; color: red;" title="第一个字段为回显的显示字段" class="fa fa-exclamation-circle ab-help" ab-tip> </a>
 							</td>
 							<td>
@@ -148,7 +148,7 @@
 					</tr>
 					<tr ng-repeat="field in data.conditionFields">
 						<td>
-							<input type="text" class="form-control" ng-model="field.columnName" />
+							<input type="text" class="form-control" ng-model="field.columnName" readonly/>
 						</td>
 						<td>
 							<input type="text" class="form-control" ng-model="field.showName" />
@@ -198,7 +198,7 @@
 					</tr>
 					<tr ng-repeat="field in data.returnFields">
 						<td>
-							<input type="text" class="form-control" ng-model="field.columnName" />
+							<input type="text" class="form-control" ng-model="field.columnName" readonly/>
 						</td>
 						<td>
 							<input type="text" class="form-control" ng-model="field.returnName" />
@@ -222,7 +222,7 @@
 					</tr>
 					<tr ng-repeat="field in data.sortFields">
 						<td>
-							<input type="text" class="form-control" ng-model="field.columnName" />
+							<input type="text" class="form-control" ng-model="field.columnName" readonly/>
 						</td>
 						<td>
 							<select ng-model="field.sortType" ng-options="v.key as v.desc for (k,v) in Direction" class="form-control"></select>

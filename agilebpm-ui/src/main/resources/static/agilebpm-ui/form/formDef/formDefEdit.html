@@ -21,7 +21,7 @@
 			<a class="btn btn-primary fa-save" href="javascript:void(0)" ng-model="data" ab-save="/form/formDef/save">保存</a>
 			<a href="javascript:void(0)" class="btn btn-primary fa-reply" onclick="javaScript:window.close()">取消</a>
 			<a ng-show="data.boKey" href="javascript:void(0)" class="btn btn-primary fa-cubes" ng-click="selectTemplate()">生成表单</a>
-			<a href="javascript:void(0)" class="btn btn-primary fa-eye" ng-click="preview()">预览</a>
+			<a href="javascript:void(0)" class="btn btn-primary fa-eye" ng-click="preview()" ng-show="data.id">预览</a>
 			<span ng-if="data.isDeveloper">
 				<a class="btn btn-primary fa-hand-o-up" ng-click="getBackupHtml()">
 					<span>
