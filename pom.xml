@@ -39,25 +39,31 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ab.wf.version>1.2.9</ab.wf.version>
+		<ab.wf.version>1.3.0</ab.wf.version>
 		<ab.base.version>1.2.2</ab.base.version>
 		<ab.platform.version>1.2.2</ab.platform.version>
 		<ab.busform.version>1.2.2</ab.busform.version>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>nexus-agile-bpm</id>
-			<url>http://nexus.agilebpm.cn/nexus/content/groups/public/</url>
-		</repository>
-	</repositories>
+	 <!-- deploy 服务器 -->
+    <distributionManagement>
+        <repository>
+            <id>nexus-agile-bpm</id>
+            <url>http://47.106.140.247:8081/nexus/content/repositories/releases/</url>
+        </repository>
 
-	<pluginRepositories>
-		<pluginRepository>
-			<id>nexus-agile-bpm</id>
-			<url>http://nexus.agilebpm.cn/nexus/content/groups/public/</url>
-		</pluginRepository>
-	</pluginRepositories>
+        <snapshotRepository>
+            <id>nexus-agile-bpm</id>
+            <url>http://47.106.140.247:8081/nexus/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>nexus-agile-bpm</id>
+            <url>http://47.106.140.247:8081/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
 
 	<dependencyManagement>
 		<dependencies>
