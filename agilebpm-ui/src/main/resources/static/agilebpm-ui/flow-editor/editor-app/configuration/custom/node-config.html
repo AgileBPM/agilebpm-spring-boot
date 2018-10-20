@@ -46,6 +46,7 @@
 		  <span class="pull-right btn btn-info" ng-click="editAllNodes('btns')">{{isEditAllNode_btns?'隐藏其他节点按钮':'设置所有节点按钮'}}</span>
 	  	  <div ng-repeat="(nodeId,node) in nodeMap" class="well" ng-if="nodeId == selectedItem.nodeId || isEditAllNode_btns">
 	  	  	 <button type="button" class="btn glyphicon">{{node.nodeName}}({{node.nodeId}})</button><br>
+	  	  	 <div class="alert alert-danger row show-grid"  ng-if="!node.btnList || node.btnList.length ==0">按钮会在保存后生成</div>
      		 <span ng-repeat="btn in node.btnList" class="btn btn-xs btn-success" style="margin: 3px">{{btn.name}}</span>
 		  	 <span class="pull-right btn btn-danger fa fa-edit btn-sm" ng-hide="b" ng-click="editBtns(node)">编辑</span>
 	  	  </div>
