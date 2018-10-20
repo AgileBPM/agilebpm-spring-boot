@@ -19,7 +19,7 @@ server:
 
 ab:
   security:
-    auth-ingores: /login.*,/agilebpm-ui*,/index.html
+    auth-ingores: /login.*,/agilebpm-ui*,/index.html,/swagger-*,/v2/api-docs*,
   redis: 
       host: 47.106.140.247
       use-redis-cache: false
@@ -36,4 +36,4 @@ ab:
    
 
 
-s.k: 5392537a203272132719aad01638fc99d0258d67e6cb7c29b76672a4cb47c18f0a16f85c569009d02da55598643b4169
+s.k: c718f2e8603a7fab16524412d330bbc95b4d419c175c4a6215d465b7e2e1629173118b5b3ebe349fc71c519cacd1e938
