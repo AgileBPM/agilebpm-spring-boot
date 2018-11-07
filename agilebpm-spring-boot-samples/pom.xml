@@ -44,44 +44,44 @@
 		</dependency>
 
 		<dependency>
-				<groupId>com.dstz.agilebpm</groupId>
-				<artifactId>form-rest</artifactId>
+			<groupId>com.dstz.agilebpm</groupId>
+			<artifactId>form-rest</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.dstz.agilebpm</groupId>
 			<artifactId>bus-rest</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.dstz</groupId>
 			<artifactId>agilebpm-sys-starter</artifactId>
 		</dependency>
-		
-		 <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.6.1</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>mapstruct</artifactId>
-                    <groupId>org.mapstruct</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.6.1</version>
-        </dependency>
-        
-         <dependency>
-            <groupId>com.dstz</groupId>
-            <artifactId>agilebpm-ui</artifactId>
-            <version>0.0.1</version>
-        </dependency>
 
- 		<dependency> 
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.6.1</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>mapstruct</artifactId>
+					<groupId>org.mapstruct</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.dstz</groupId>
+			<artifactId>agilebpm-ui</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.dstz</groupId>
 			<artifactId>agilebpm-wf-starter</artifactId>
 		</dependency>
@@ -92,4 +92,19 @@
 		</dependency>
 
 	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>
