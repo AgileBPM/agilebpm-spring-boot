@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="app" ng-controller="indexCtrl" >
+<html ng-app="app" ng-controller="indexCtrl" style="height: 100%">
 <head>
 	<title>首页 {{getEnviroment()}}</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -142,8 +142,8 @@
             </div>
             <!-- iframe 内容区 -->
             <div class="row J_mainContent" id="content-main">
-                <iframe class="J_iframe" width="100%" height="100%"  frameborder="0"  seamless ng-repeat="menu in openedMenu" 
-                	ng-src="{{menu.url}}" style="display:{{menu.active=='active'?'block':'none'}};" id="{{menu.id}}iframe"></iframe> 
+                <iframe class="J_iframe {{menu.active=='active'?'iframe-block':'iframe-none'}}" width="100%" height="100%"  frameborder="0"  seamless ng-repeat="menu in openedMenu" 
+                	ng-src="{{menu.url}}" id="{{menu.id}}iframe"></iframe> 
             </div>
             
             <div class="footer">
@@ -154,3 +154,7 @@
 	</div>
 </body>
 </html>
+<style>
+.iframe-block{ display:block }
+.iframe-none{ display:none; }
+</style>

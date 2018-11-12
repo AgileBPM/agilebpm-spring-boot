@@ -3426,15 +3426,13 @@ body {
     color: #676a6c;
     overflow-x: hidden;
 }
-
-html,
 body {
     height: 100%;
 }
 
 body.full-height-layout #wrapper,
 body.full-height-layout #page-wrapper {
-    height: 99%;
+    height: 100%;
 }
 
 #page-wrapper {
@@ -3801,7 +3799,7 @@ nav.page-tabs .page-tabs-content {
 }
 
 #content-main {
-    height: calc(100% - 140px);
+    height: calc(100% - 150px);
     overflow: hidden;
 }
 

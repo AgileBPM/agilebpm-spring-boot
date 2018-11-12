@@ -22,7 +22,7 @@ ab:
     auth-ingores: /login.*,/agilebpm-ui*,/index.html,/swagger-*,/v2/api-docs*,
   redis: 
       host: 47.106.140.247
-      use-redis-cache: false
+      use-redis-cache: true
   mail:
     mail-address: agileBpm@qq.com
     nick-name: AgileBPM

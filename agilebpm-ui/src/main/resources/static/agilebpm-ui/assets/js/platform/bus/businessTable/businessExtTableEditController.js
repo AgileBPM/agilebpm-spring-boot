@@ -64,6 +64,8 @@ app.controller('ctrl', [ '$scope', 'baseService', 'ArrayToolService', '$filter',
 	$scope.$on("afterSaveEvent", function(event, data) {
 		if (!data.r) {
 			$.Dialog.close(window);
+		}else{
+			window.location.reload();
 		}
 	});
 

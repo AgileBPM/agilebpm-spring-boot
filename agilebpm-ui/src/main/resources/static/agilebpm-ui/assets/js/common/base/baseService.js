@@ -1,22 +1,3 @@
-var Namespace = new Object();
-
-/**
- * 动态增加包。
- * 比如：Namespace.register("com.dstz.form");  
- * 然后：
- * var obj=new com.dstz.form.Form();
- */
-Namespace.register = function(path) {
-	var arr = path.split(".");
-	var ns = "";
-	for ( var i = 0; i < arr.length; i++) {
-		if (i > 0)
-			ns += ".";
-		ns += arr[i];
-		eval("if(typeof(" + ns + ") == 'undefined') " + ns + " = new Object();");
-	}
-};
-
 var base = angular.module("base", [])
 
 .config(function($httpProvider) {     

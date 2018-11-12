@@ -9,7 +9,6 @@ overallViewApp.controller("overallViewController", [ '$scope', 'baseService', 'A
 			var defer = baseService.postForm(__ctx+"/bpm/overallView/getOverallView",param);
 			$.getResultData(defer,function(data){
 				$scope.overallView = data;
-				$scope.defSetting = $scope.overallView.defSetting;
 			});
 		}
 		if(defId){
@@ -30,8 +29,8 @@ overallViewApp.controller("overallViewController", [ '$scope', 'baseService', 'A
 			if($scope.importOverallViewMap)
 			for(var key in $scope.importOverallViewMap){
 				var obj = $scope.importOverallViewMap[key][0];
-				if(obj.defId){
-					$.Dialog.error("数据异常");
+				if(obj.defId || !obj.bpmnXml || !obj.modelJson){
+					$.Dialog.error("数据异常,请检查 流程 bpmnxml , bpmnModelJson 是否完整！");
 					console.error($scope.importOverallViewMap);
 					return;
 				}
@@ -39,22 +38,13 @@ overallViewApp.controller("overallViewController", [ '$scope', 'baseService', 'A
 				overallViewList.push(obj);
 			}
 			if(overallViewList.length==0){
-				$.Dialog.error("要上传的数据不存在！");
+				$.Dialog.error("要上传的数据不存在！,请先导入合法的流程定义文件");
 				return;
 			}
 			
 			var defer = baseService.post(__ctx+"/bpm/overallView/importSave",overallViewList);
-			defer.then(function(data){
-				if(data.result==1){
-					$.Dialog.success(data.message,function(){
-						window.location = "overallViewUpload";
-					});
-				}else{
-					$.Dialog.error("保存异常"+data.message);
-				}
-				
-			},function(code){
-				$.Dialog.error("获取流程定义异常"+code);
+			$.getResultMsg(defer,function(){
+				window.location = "bpm/overallView/overallViewUpload.html";
 			});
 		}
 		
@@ -73,14 +63,16 @@ overallViewApp.controller("overallViewController", [ '$scope', 'baseService', 'A
 	              data: fd,
 	              headers: {'Content-Type':undefined},transformRequest: angular.identity})   
 	              .success(function(data) {
-	            	  if(data.message){
-	            		  $.Dialog.error(data.message);
+	            	  if(!data.isOk){
+	            		  $.Dialog.error(data.msg);
 	            		  return
 	            	  }
-	            	  $scope.importOverallViewMap = data;
-	            	  window.setTimeout(function(){
-	            		  $('#tt').tabs({width:'100%',height:'100%'});
-	            	  },100)
+	            	  for(var key in data.data){
+	            		  data.data[key][0].bpmDefinition.defSetting;
+	            		  
+	            	  }
+	            	  $scope.importOverallViewMap = data.data;
+	            	  
 	               }); 
 
 	     }

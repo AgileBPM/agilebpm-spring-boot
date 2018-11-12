@@ -33,7 +33,8 @@
 		</div>
 	</div>
 	<div id="sortable" class="" >
-		<div ng-repeat="panel in panelList track by panel.id" class="sortablebody {{$index}} draggable" data-id="{{panel.id}}" style="height:{{panel.custHeight}}px;width:{{panel.custWidth}}%">
+		<div ng-repeat="panel in panelList track by panel.id" class="sortablebody {{$index}} draggable" data-id="{{panel.id}}"
+			ng-style="{'height':panel.custHeight+'px','width':panel.custWidth+'%'}">
 			<div dynamic-directive="workbench-{{panel.type}}"></div>
 		</div>
 	</div>

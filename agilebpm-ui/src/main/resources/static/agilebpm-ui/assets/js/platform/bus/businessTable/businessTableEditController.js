@@ -35,16 +35,14 @@ app.controller('ctrl', [ '$scope', 'baseService', 'ArrayToolService', '$filter',
 		});
 		ToolsController.getEnum("com.dstz.base.api.constant.ColumnType").then(function(data) {
 			$scope.ColumnType = data;
-
 			$scope.$apply(function() {
-				// 初始化主键id默认值
+				// 初始化主键默认值
 				$scope.data.columns.push({
 					type : $scope.ColumnType.VARCHAR.key,
 					length : 50,
 					decimal : 0,
 					required : true,
 					primary : true,
-					name : "id",
 					comment : "主键"
 				});
 			});

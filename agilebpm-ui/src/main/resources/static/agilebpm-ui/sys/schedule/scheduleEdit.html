@@ -23,6 +23,9 @@
 				//-------------选择参与者-----------------------//
 				$scope.openCustom = function() {
 					var initParticipants = new Array();
+					if(!$scope.data.scheduleParticipantList){
+						$scope.data.scheduleParticipantList = [];
+					}
 					for(var i = 0; i < $scope.data.scheduleParticipantList.length; i ++) {
 						var participant = new Object();
 						

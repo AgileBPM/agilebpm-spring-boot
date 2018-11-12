@@ -40,8 +40,8 @@
 		var arrays = $("[ab-grid]").bootstrapTable('getSelections');
 		var idName = $("[ab-grid]").bootstrapTable('getOptions').idField;
 		var ids = [];
-		arrays.each(function(){
-			ids.push(this[idName]);
+		arrays.forEach(function(item){
+			ids.push(item[idName]);
 		})
 		
 		return ids;
@@ -293,16 +293,20 @@ rowsManager.sendAction = function() {
 
 //常用的格式化
 window.dateTimeFormatter=function(value, row, index) {
-    if (value == null || value == "")
-        return "";
-    var result = value;
-
+    if (value == null || value == ""){return "";}
+    //IE 不支持  new date(“2018-11-9”);
+    if(value.indexOf("-")!=-1){
+    	value = value.replaceAll("-",'/');
+    }
+    
     return new Date(value).format("yyyy-MM-dd HH:mm:ss");
 };
 
 window.dateFormatter=function(value, row, index) {
-    if (value == null || value == "")
-        return "";
+	if (value == null || value == ""){return "";}
+    if(value.indexOf("-")!=-1){
+    	value = value.replaceAll("-",'/');
+    }
     return new Date(value).format("yyyy-MM-dd");
 }
 /**

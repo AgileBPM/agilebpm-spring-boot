@@ -251,28 +251,27 @@ var clicks = 0;//判断双击
                            end: Date.parse(end._d),
                        },
                        success: function(data) {
-                    	   //
-                           
                            i = 0;
                            while(data[i] != null) {
+                        	   var participantSchedule = data[i];
                         	   events.push({
                                    isMine: false,
-                        		   title: data[i].title + "(" +(data[i].rate_progress==null ? 0 : data[i].rate_progress) + "%)",
-                                   start: new Date(data[i].start_time), // will be parsed
-                                   end: new Date(data[i].end_time),
-                                   actualStart: data[i].actual_start_time ? new Date(data[i].actual_start_time) : "",
-                                   actualEnd: data[i].complete_time ? new Date(data[i].complete_time) : "",
-                        	       id: data[i].id_,
-                        	       mainId: data[i].schedule_id,
+                        		   title: participantSchedule.title + "(" +(participantSchedule.rateProgress==null ? 0 : participantSchedule.rateProgress) + "%)",
+                                   start: new Date(participantSchedule.startTime), // will be parsed
+                                   end: new Date(participantSchedule.endTime),
+                                   actualStart: participantSchedule.actualStartTime,
+                                   actualEnd: participantSchedule.completeTime,
+                        	       id: participantSchedule.id,
+                        	       mainId: participantSchedule.scheduleId,
                         	       className: "height:200",
-                        	       rateProgress: data[i].rate_progress,
-                        	       owner: (data[i].owner_name != null ? data[i].owner_name : data[i].owner),
-                        	       color: data[i].rate_progress >= 100 ?"#9AFF9A" : ((new Date()).getTime() > data[i].end_time ? '#FF6A6A' : '#FFEC8B'),
-                        	       committer: (data[i].submitNamer != null ? data[i].submitNamer : data[i].submitter),
-                        	       taskUrl: data[i].task_url,
-                        	       openType: data[i].open_type,
-                        	       type: data[i].type,
-                        	       remark: data[i].remark
+                        	       rateProgress:participantSchedule.rateProgress,
+                        	       owner: (participantSchedule.ownerName != null ? participantSchedule.ownerName : participantSchedule.owner),
+                        	       color: participantSchedule.rateProgress >= 100 ?"#9AFF9A" : ((new Date()).getTime() > participantSchedule.endTime ? '#FF6A6A' : '#FFEC8B'),
+                        	       committer: (participantSchedule.submitNamer != null ? participantSchedule.submitNamer : participantSchedule.submitter),
+                        	       taskUrl: participantSchedule.taskUrl,
+                        	       openType: participantSchedule.openType,
+                        	       type: participantSchedule.type,
+                        	       remark: participantSchedule.remark
                                });
                         	   i++;
                            }

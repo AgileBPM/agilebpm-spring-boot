@@ -575,6 +575,21 @@ var directive = angular.module("baseDirective", [ "base" ])
 			abCombox : '='
 		},
 		link : function(scope, element, attrs,ctrl) {
+			//指令中的映射关系 {对话框返回字段:赋值的对象}
+			var valueMap = {};
+			var watchAttr;//key value模式中的监听对象，这里随便找一个监听就行
+			angular.forEach(attrs, function(val, key) {
+				// 找到value开头的赋值配置
+				if (key.indexOf("value") !== 0) {
+					return;
+				}
+				var str = key.replace("value", "");
+				var name = str.substring(0, 1).toLowerCase();
+				name =name + str.substring(1, key.length);
+				valueMap[name] = val;
+				watchAttr = val;
+			});
+			
 			var ztreeDataKey = attrs.ztreeDataKey || {
 				idKey : "id",
 				pIdKey : "parentId",
@@ -603,14 +618,8 @@ var directive = angular.module("baseDirective", [ "base" ])
 			var ztreeCreator = new ZtreeCreator(scope.treeId, url);
 			scope.treeClick = function(event, treeId, treeNode) {
 				if(treeNode.noclick)return;
-				angular.forEach(attrs, function(val, key) {
-					// 找到value开头的赋值配置
-					if (key.indexOf("value") !== 0) {
-						return;
-					}
-					var str = key.replace("value", "");
-					var name = str.substring(0, 1).toLowerCase() + str.substring(1, key.length);
-					eval("scope.$parent." + val + " = treeNode[name]");
+				angular.forEach(valueMap, function(val, key) {
+					eval("scope.$parent." + val + " = treeNode[key]");
 				});
 				scope.dicData.value = treeNode[ztreeDataKey.name];// name肯定用来展示
 				if(attrs.abCombox){
@@ -632,26 +641,38 @@ var directive = angular.module("baseDirective", [ "base" ])
 					onClick : scope.treeClick
 				}).makeCombTree(scope.treeId + "input").initZtree(function(_treeObj) {
 					scope.treeObj = _treeObj;
-					scope.initData(scope.abCombox);
+					scope.initData();
 				});
 			};
 
 			// 初始化数据
 			var hasInited = false;
 			scope.initData = function(id) {
-				if (!id || !scope.treeObj) {
+				if (!scope.treeObj) {
 					return;
 				}
 				hasInited = true;
+				
 				var nodes = scope.treeObj.getNodesByFilter(function(node) {
-					if(attrs.dictKey && node.key === id){
-						return true;
+					if(attrs.abCombox){//如果配置了Id的初始化逻辑
+						if(attrs.dictKey && node.key === scope.abCombox){
+							return true;
+						}
+						
+						if (node[ztreeDataKey.idKey] === scope.abCombox) {
+							return true;
+						}
+						return false;
+					}else{//value key 模式下的获取初始化node逻辑
+						var eql = true;
+						angular.forEach(valueMap, function(val, key) {
+							eval("var data = scope.$parent." + val );
+							if(data!=node[key]){
+								eql = false
+							}
+						});
+						return eql;
 					}
-					
-					if (node[ztreeDataKey.idKey] === id) {
-						return true;
-					}
-					return false;
 				});
 				if (nodes.length > 0) {
 					scope.dicData.value = nodes[0][ztreeDataKey.name];
@@ -662,13 +683,22 @@ var directive = angular.module("baseDirective", [ "base" ])
 
 			window.setTimeout(function() {
 				scope.loadTree();
-
-				// watch上面的值触发
-				scope.$watch("abCombox", function(newValue, oldValue) {
-					if (newValue !== oldValue || !hasInited) {
-						scope.initData(newValue);
-					}
-				});
+				
+				//开始监听初始化事件
+				if(attrs.abCombox){//如果配置了Id则监听这个
+					scope.$watch("abCombox", function(newValue, oldValue) {
+						if (newValue !== oldValue || !hasInited) {
+							scope.initData();
+						}
+					});
+				}else{//这是要监听value key这种赋值模式
+					scope.$watch("$parent."+watchAttr, function(newValue, oldValue) {
+						if (newValue !== oldValue || !hasInited) {
+							scope.initData();
+						}
+					});
+				}
+				
 			}, 10)
 		},
 		template : '<div style="width: 100%">\
@@ -810,8 +840,6 @@ var directive = angular.module("baseDirective", [ "base" ])
 					}); 
 					return;
 				}
-				
-				
 				
 				angular.forEach(data, function(item) {
 					if($.isEmptyObject(valueMap)){

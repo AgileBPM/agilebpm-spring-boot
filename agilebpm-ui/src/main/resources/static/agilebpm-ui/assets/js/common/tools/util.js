@@ -581,6 +581,7 @@ jQuery.extend({
 		}  // for small pages with total size less then the viewport  
 		return {width:winW, height:winH}; 
 	}
+	
 });
 
 

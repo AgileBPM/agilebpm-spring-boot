@@ -98,7 +98,8 @@ dialogHelper__.initDialogs = function(){
 				 
 				conf.type = 1;
 				iframeId ="dialogId_"+Math.random(1000);
-				var iframe ='<iframe  src="'+url+'" id="'+iframeId+'" name="'+iframeId+'" style="height:99%;width:100%;border:none;"></iframe>';
+				var iframeHeight = conf.height > 360 ? "98%":"97%";
+				var iframe ='<iframe  src="'+url+'" id="'+iframeId+'" name="'+iframeId+'" style="height:'+iframeHeight+';width:100%;border:none;"></iframe>';
 				conf.content = iframe;
 			}
 			

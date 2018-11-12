@@ -64,4 +64,14 @@
 		</table>
 	</div>
 </body>
+	<script type="text/javascript">
+		function exportbpm(){
+			var ids =$.getDatagridCheckedId();
+			if(!ids || ids.length===0){
+				$.Dialog.warning("请至少选择一条流程定义！");
+				return;
+			}
+			window.open(__ctx+"/bpm/overallView/exportBpmDefinition?rand=" + Math.random()+"&defIds="+ids.join(","));
+		}
+	</script>
 </html>

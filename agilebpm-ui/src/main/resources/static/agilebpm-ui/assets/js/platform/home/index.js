@@ -79,11 +79,12 @@ app.controller("indexCtrl",['$scope','baseService',function(scope,baseService){
 		window.setTimeout(function(){
 			var $frame = $("#"+menu.id+"iframe");
 			if(!$frame[0])return;
-			var index = layer.load();
+			/*var index = layer.load();
+			console.info(" layer load()" + index);
 			$frame.load(function (){
-				var index = layer.load();
-				layer.close(index);  
-	        });
+				console.info(" layer close()"+ index);
+				layer.close(index); 
+	        });*/
 		},2)
 	}
 	
