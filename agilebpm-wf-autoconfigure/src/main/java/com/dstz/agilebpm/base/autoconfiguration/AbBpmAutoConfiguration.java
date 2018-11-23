@@ -21,6 +21,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
 import com.dstz.base.api.exception.BusinessException;
 import com.dstz.base.core.id.IdGenerator;
+import com.dstz.base.db.transaction.AbDataSourceTransactionManager;
 import com.dstz.bpm.act.cache.ActivitiDefCache;
 import com.dstz.bpm.act.id.ActivitiIdGenerator;
 import com.dstz.bpm.act.listener.GlobalEventListener;
@@ -76,7 +77,7 @@ public class AbBpmAutoConfiguration {
 	}
 	
 	@Bean
-	SpringProcessEngineConfiguration processEngineConfiguration(DataSource dataSource,DataSourceTransactionManager transactionManager,
+	SpringProcessEngineConfiguration processEngineConfiguration(DataSource dataSource,AbDataSourceTransactionManager transactionManager,
 			ActivitiDefCache activitiDefCache,GlobalEventListener globalEventListener) {
 		SpringProcessEngineConfiguration processConfiguration = new SpringProcessEngineConfiguration();
 		
@@ -109,6 +110,8 @@ public class AbBpmAutoConfiguration {
 		map.put("PROCESS_COMPLETED", "instanceEndEventListener");
 		map.put("ACTIVITY_STARTED", "activityStartedListener");
 		map.put("ACTIVITY_COMPLETED", "activityComplatedListener");
+		
+		map.put("SEQUENCEFLOW_TAKEN", "sequenceFlowTakenListener");
 		
 		globalEventListener.setHandlers(map);
 		

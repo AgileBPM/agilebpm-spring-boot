@@ -5,6 +5,9 @@ import com.dstz.base.dao.baseinterceptor.QueryInterceptor;
 import com.dstz.base.dao.baseinterceptor.SaveInterceptor;
 import com.dstz.base.db.datasource.DynamicDataSource;
 import com.github.pagehelper.PageInterceptor;
+
+import org.apache.ibatis.mapping.DatabaseIdProvider;
+import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
 import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -87,6 +90,17 @@ public class DataSourceAutoConfiguration {
                 queryInterceptor(),
                 saveInterceptor()
         });
+        
+        // 设置多环境的配置
+        DatabaseIdProvider databaseIdProvider = new VendorDatabaseIdProvider();
+        
+        Properties mysqlp = new Properties();
+        mysqlp.setProperty("MySQL", "mysql");
+        mysqlp.setProperty("Oracle", "oracle");
+        databaseIdProvider.setProperties(mysqlp);
+        
+        sqlSessionFactoryBean.setDatabaseIdProvider(databaseIdProvider);
+        
         return sqlSessionFactoryBean;
     }
 

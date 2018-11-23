@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @date 2018-07-11
  */
 @ComponentScan("com.dstz.*")
-@EnableTransactionManagement(proxyTargetClass=true)
 @SpringBootApplication
 public class SamplesApplication {
 	

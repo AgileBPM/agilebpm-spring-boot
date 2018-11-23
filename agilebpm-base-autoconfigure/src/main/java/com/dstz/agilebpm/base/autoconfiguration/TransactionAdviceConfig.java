@@ -9,9 +9,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
 import org.springframework.transaction.interceptor.NameMatchTransactionAttributeSource;
 import org.springframework.transaction.interceptor.TransactionInterceptor;
+
+import com.dstz.base.db.transaction.AbDataSourceTransactionManager;
 /**
  * <pre>
  * 描述：aop式事务注解
@@ -22,15 +25,18 @@ import org.springframework.transaction.interceptor.TransactionInterceptor;
  * </pre>
  */
 @Configuration
+@EnableTransactionManagement(proxyTargetClass=true)
 @Aspect
 public class TransactionAdviceConfig {
 	private static final String AOP_POINTCUT_EXPRESSION = "execution(* com.dstz.*.*.manager.*.*(..))||execution(* com.dstz.*.manager.*.*(..))";
 
-	@Autowired
-	private PlatformTransactionManager transactionManager;
-
+	@Bean(name="abTransactionManager")
+	public PlatformTransactionManager  platformTransactionManager() {
+		return new AbDataSourceTransactionManager();
+	}
+	
 	@Bean(name = "abTransactionInterceptor")
-	public TransactionInterceptor txAdvice() {
+	public TransactionInterceptor txAdvice(PlatformTransactionManager abTransactionManager) {
 
 		DefaultTransactionAttribute requiredDTA = new DefaultTransactionAttribute();
 		requiredDTA.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
@@ -45,14 +51,14 @@ public class TransactionAdviceConfig {
 		source.addTransactionalMethod("query*", requiredReadonlyDTA);
 		source.addTransactionalMethod("find*", requiredReadonlyDTA);
 		source.addTransactionalMethod("is*", requiredReadonlyDTA);
-		return new TransactionInterceptor(transactionManager, source);
+		return new TransactionInterceptor(abTransactionManager, source);
 	}
 
 	@Bean(name = "abAdvisor")
-	public Advisor txAdviceAdvisor() {
+	public Advisor txAdviceAdvisor(PlatformTransactionManager abTransactionManager) {
 		AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
-		pointcut.setExpression(AOP_POINTCUT_EXPRESSION);
-		return new DefaultPointcutAdvisor(pointcut, txAdvice());
+		pointcut.setExpression(AOP_POINTCUT_EXPRESSION); 
+		return new DefaultPointcutAdvisor(pointcut, txAdvice(abTransactionManager));
 	}
 	
 }
