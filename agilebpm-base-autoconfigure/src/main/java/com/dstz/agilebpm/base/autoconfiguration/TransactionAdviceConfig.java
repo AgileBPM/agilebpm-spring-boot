@@ -25,7 +25,6 @@ import com.dstz.base.db.transaction.AbDataSourceTransactionManager;
  * </pre>
  */
 @Configuration
-@EnableTransactionManagement(proxyTargetClass=true)
 @Aspect
 public class TransactionAdviceConfig {
 	private static final String AOP_POINTCUT_EXPRESSION = "execution(* com.dstz.*.*.manager.*.*(..))||execution(* com.dstz.*.manager.*.*(..))";

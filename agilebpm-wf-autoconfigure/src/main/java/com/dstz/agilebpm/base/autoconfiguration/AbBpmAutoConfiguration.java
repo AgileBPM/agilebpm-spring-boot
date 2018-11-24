@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import com.dstz.base.api.exception.BusinessException;
 import com.dstz.base.core.id.IdGenerator;
@@ -77,7 +78,7 @@ public class AbBpmAutoConfiguration {
 	}
 	
 	@Bean
-	SpringProcessEngineConfiguration processEngineConfiguration(DataSource dataSource,AbDataSourceTransactionManager transactionManager,
+	SpringProcessEngineConfiguration processEngineConfiguration(DataSource dataSource,PlatformTransactionManager transactionManager,
 			ActivitiDefCache activitiDefCache,GlobalEventListener globalEventListener) {
 		SpringProcessEngineConfiguration processConfiguration = new SpringProcessEngineConfiguration();
 		
