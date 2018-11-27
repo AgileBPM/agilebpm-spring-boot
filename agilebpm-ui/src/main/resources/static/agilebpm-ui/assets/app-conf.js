@@ -1,7 +1,7 @@
 window.__ctx = "";
 
 ////跨域时修改 此 ctx 
-//window.__ctx = "http://localhost:8080";
+//window.__ctx = "http://localhost:8080/agile-bpm-platform";
 
 //jQuery 跨域处理
 jQuery(function () {  //, headers: { 'x-requested-with': 'XMLHttpRequest' }

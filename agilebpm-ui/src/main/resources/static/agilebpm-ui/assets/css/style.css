@@ -47,6 +47,7 @@ input.ng-invalid, textarea.ng-invalid, select.ng-invalid, .edui-editor.ng-invali
 	background: #F0F2F9;
 	height: 32px;
 	text-align: center;
+	width: auto;
 }
 .form-table th {
 	width: 15%;

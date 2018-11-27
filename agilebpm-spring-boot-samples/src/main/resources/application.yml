@@ -1,15 +1,15 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://47.106.140.247:3306/demo?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
-    username: root
-    password: bairimeng
+    url: jdbc:mysql://47.106.140.247:3306/public?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    username: public
+    password: public
     dbType: mysql
 
 logging:
   level:
     root: info
-    
+
 server:
   context-path: /
   

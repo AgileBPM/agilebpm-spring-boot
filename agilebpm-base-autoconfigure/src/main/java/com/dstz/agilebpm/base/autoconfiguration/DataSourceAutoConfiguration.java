@@ -56,7 +56,7 @@ public class DataSourceAutoConfiguration {
     }
 
     @Bean(name = "jdbcTemplate")
-    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+    public JdbcTemplate jdbcTemplate(@Qualifier("dataSource") DataSource dataSource) {
 
         return new JdbcTemplate(dataSource);
     }
@@ -81,7 +81,7 @@ public class DataSourceAutoConfiguration {
     
     // MapperLocations TODO 可配置
     @Bean(name = "abSqlSessionFactory")
-    public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource) {
+    public SqlSessionFactoryBean sqlSessionFactory(@Qualifier("dataSource") DataSource dataSource) {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setMapperLocations(resolveMapperLocations("classpath*:com/dstz/*/mapping/*.xml", "classpath*:com/dstz/*/*/mapping/*.xml"));

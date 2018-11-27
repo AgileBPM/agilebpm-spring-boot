@@ -90,7 +90,7 @@ app.controller('ctrl', [ '$scope', 'baseService', 'ArrayToolService', '$filter',
 			ok : function(index, innerWindow) {
 				var data = innerWindow.getData();
 				$scope.$apply(function() {
-					angular.copy(data, rights[key]);
+					rights[key] = data;
 				});
 				$.Dialog.close(innerWindow);
 			},

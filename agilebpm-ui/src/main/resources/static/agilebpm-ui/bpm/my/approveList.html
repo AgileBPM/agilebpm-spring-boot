@@ -41,7 +41,7 @@
               <th data-field="approveTime" data-formatter=dateTimeFormatter data-sort-name="end_time_" data-sortable="true">办理时间</th>
               <th data-field="durMs" data-formatter="$.timeLag">处理用时</th>
               <th data-field="approveStatus" data-formatter="labelFormatter" 
-              			data-value-style="agree-同意-primary,oppose-反对-default,reject-驳回-danger,revoker-撤销-danger,">处理结果</th>
+              			data-value-style="agree-同意-primary,oppose-反对-default,reject-驳回-danger,signOppose-会签反对-danger,signPass-会签通过-success,turn-转办-info,">处理结果</th>
               <th data-formatter="innerHtmlFormatter" data-title="管理">
 					<a class="fa-detail btn btn-outline btn-primary btn-sm" openDialog='详情' qtip='详情' url='/bpm/instance/instanceDetail.html?id={id}&nodeId={nodeId}' ></a>
 			  </th>

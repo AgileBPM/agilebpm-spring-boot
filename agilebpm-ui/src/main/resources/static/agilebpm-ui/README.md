@@ -1,29 +1,21 @@
 # bpm-explorer 
 ## 前端项目 
+前端项目非单页面应用，而且系统为了入手更容易，仅仅对公共js 模块化打包，并暴露关键框架的全局引用。
+当在开发的时候，不需要关注公共模块的js，你可以直接引入自己的js。
 
-前端使用 angular bootstrap-table bootstrap  等 js组件，详细可以看 assets/js/plugins 目录
-
+允许前端项目有两种形式
+- 前后端一起开发的推荐 通过Tomcat 运行前端资源
+- 前端独立开发的，推荐 	`npm run dev ` 运行前端项目
 
 ## rest服务端 ctx
-在 assets/app-conf.js 中配置、默认为  /agile-bpm-platform 
-流程设计器在flow-editor/editor-app/app-cfg.js
-修改后需要打包
+assets/app-conf.js 中配置后端服务 前缀、默认为  /agile-bpm-platform  需要修改为具体后端请求地址：http://localhost:8080/agile-bpm-platform
+flow-editor/editor-app/app-cfg.js  中配置流程设计器的后端服务前缀、默认为 /agile-bpm-platform 
+修改公共 js 后需要手动打包   `npm run build`
 
-
-## webpack打包
-
-前端公共js css 我们使用webpack 打包
-
-因为webpack模块化管理会让前端开发变得略微麻烦。故此，我们约定，只有公共js，angular的 service 才会要求打包处理。
-
-
+## 页面
 列表页面可参考 sysPropertiesList.html
 编辑页可参考 sysPropertiesEdit.html
 
 
-#### 安装nodejs 安装webpack
-npm install
-
-#### 实时监控资源修改情况进行打包 webpack -w 
-
-如果只负责前端也可以使用webpack 的server 
+#### 安装 nodejs 安装 webpack 等相关依赖
+` npm install`

@@ -377,6 +377,28 @@ var directive = angular.module("baseDirective", [ "base" ])
 		}
 	}
 } ])
+.directive('abArrayStr', [ function() {
+	return {
+		restrict : 'A',
+		require : "ngModel",
+		link : function(scope, element, attrs, ctrl) {
+
+			// modelValue转viewValue的过程
+			ctrl.$formatters.push(function(value) {
+				if (!value) return [];
+				return value.split(",");
+			});
+
+			// viewValue转modelValue的过程
+			ctrl.$parsers.push(function(value) {
+				if(value && value.length>0){
+					return value.join(","); 
+				}
+				return "";
+			});
+		}
+	}
+} ])
 /**
  * 在对象上显示提示框。 使用方法: <div class="flowNode"
  * ab-tip="{content:getMenuContent,alignX:'center',alignY:'bottom',offsetY:10}" ></div>

@@ -9,7 +9,7 @@
 					</button>
 					<button id="" title="" ng-switch="" on="item.type" class="btn btn-inverse ng-scope separator" class="separator" disabled="disabled">
 						<div class="ng-scope toolbar-separator"></div>
-					</button> 
+					</button>
 					<button title="扩展画幕" class="btn btn-inverse ng-scope" ng-click="canvasResize('canvas-shrink-E')">
 						<i class="glyphicon glyphicon-chevron-left" data-toggle="tooltip" title="向左扩展画幕"></i>
 					</button>
@@ -94,7 +94,10 @@
 					<div class="form-group" ng-repeat="property in selectedItem.properties" ng-show="'oryx-documentation,oryx-process_id,oryx-name,oryx-overrideid,oryx-namepackage,oryx-name'.indexOf(property.key)!=-1" ng-click="propertyClicked($index)">
 						<label class="col-sm-3 control-label title">{{ property.title }}</label>
 						<div class="col-sm-9">
-							<input type="text" class="form-control" ng-blur="updatePropertyInModel(property,null,selectedItem.nodeId)" ng-model="property.value" ng-disabled="!property.hasReadWriteMode">
+							<input type="text" class="form-control" ng-if="property.key!=='oryx-name'" ng-blur="updatePropertyInModel(property,null,selectedItem.nodeId)" ng-model="property.value" ng-disabled="!property.hasReadWriteMode">
+							<input type="text" class="form-control" ng-if="property.key==='oryx-name'" ng-change="updatePropertyInModel(property,null,selectedItem.nodeId)" ng-model="property.value" ng-disabled="!property.hasReadWriteMode">
+							
+					
 						</div>
 					</div>
 				</div>

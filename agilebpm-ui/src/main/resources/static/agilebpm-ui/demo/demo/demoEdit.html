@@ -17,8 +17,14 @@
 		}
 		/* 获取URL表单的校验情况，必须以isValid 为方法名 */
 		function isValid(){
-			// 您可以自由的去做表单校验
-			if(!AngularUtil.getScope().data.ah){
+			//校验表单 ab-validate的 校验
+			if(!ngUtil.getScope().form.$valid){
+				$.Dialog.error("表单校验不通过！");
+				return false;
+			}
+
+			// 您可以自由的去做特殊业务逻辑的校验
+			if(!ngUtil.getScope().data.ah){
 				$.Dialog.error("爱好不可为空！");
 				return false;
 			}

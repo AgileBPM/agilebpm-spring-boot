@@ -6,7 +6,7 @@
 
 	<groupId>com.dstz</groupId>
 	<artifactId>agilebpm-spring-boot</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<modules>
 		<module>agilebpm-base-autoconfigure</module>
 		<module>agilebpm-base-starter</module>
@@ -39,15 +39,15 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<ab.wf.version>1.3.6</ab.wf.version>
-		<ab.base.version>1.2.5</ab.base.version>
-		<ab.platform.version>1.2.5</ab.platform.version>
-		<ab.busform.version>1.2.5</ab.busform.version>
+		<ab.wf.version>1.3.5</ab.wf.version>
+		<ab.base.version>1.2.4</ab.base.version>
+		<ab.platform.version>1.2.4</ab.platform.version>
+		<ab.busform.version>1.2.4</ab.busform.version>
 	</properties>
 
 	 <!-- deploy 服务器 -->
     <distributionManagement>
-        <repository>
+         <repository>
             <id>nexus-agile-bpm</id>
             <url>http://47.106.140.247:8081/nexus/content/repositories/releases/</url>
         </repository>

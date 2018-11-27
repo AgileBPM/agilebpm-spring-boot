@@ -26,4 +26,4 @@ ACTIVITI.CONFIG = {
 
 window.__ctx = "";
 
-//var __ctx = '';
+//var __ctx = '/agile-bpm-platform';
