@@ -1,0 +1,39 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.106.140.247:3306/public?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    username: public
+    password: public
+    dbType: mysql
+
+logging:
+  level:
+    root: info
+
+server:
+  context-path: /
+  
+## security:
+##  ignored:  [/agilebpm-ui/** ,/css/**, /js/**,/images/**,/webjars/**,/**/favicon.ico]
+## /swagger-*,/v2/api-docs*,   swagger 免登陆
+
+ab:
+  security:
+    auth-ingores: /login.*,/agilebpm-ui*,/index.html,/swagger-*,/v2/api-docs*,
+  redis: 
+      host: 47.106.140.247
+      use-redis-cache: true
+  mail:
+    mail-address: agileBpm@qq.com
+    nick-name: AgileBPM
+    password: fywouffpohiibdee
+    send-host: smtp.qq.com
+    send-port: 465
+    
+
+    
+
+   
+
+
+s.k: c718f2e8603a7fab16524412d330bbc95b4d419c175c4a6215d465b7e2e1629173118b5b3ebe349fc71c519cacd1e938
